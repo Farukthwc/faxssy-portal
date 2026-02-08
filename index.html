@@ -3,110 +3,129 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Faxstter | Official Portal</title>
+    <title>Faxstter Inc | Professional Systems</title>
     <style>
-        :root {
-            --primary: #ff4500; /* Alev rengi */
-            --bg: #050505;
-        }
-        body {
-            background-color: var(--bg);
-            color: white;
-            font-family: 'Inter', sans-serif;
-            margin: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            overflow: hidden;
-        }
+        body { background: #000; color: #fff; font-family: 'Inter', sans-serif; display: flex; flex-direction: column; align-items: center; min-height: 100vh; margin: 0; padding: 20px; }
         
-        .container {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(15px);
-            padding: 40px;
-            border-radius: 30px;
-            text-align: center;
-            width: 90%;
-            max-width: 450px;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
-            z-index: 1;
-        }
-
-        /* ALEVLİ YAZI EFEKTİ */
-        .fire-text {
-            font-size: 2.8rem;
-            font-weight: 900;
-            letter-spacing: 3px;
-            margin: 10px 0;
-            color: #fff;
+        .burning-title {
+            font-size: clamp(2rem, 8vw, 4rem);
             text-transform: uppercase;
-            text-shadow: 
-                0 0 10px #fff, 
-                0 0 20px #ff4500, 
-                0 0 40px #ff4500, 
-                0 0 80px #ff0000;
-            animation: flicker 1.5s infinite alternate;
+            font-weight: 900;
+            color: #fff;
+            text-shadow: 0 0 10px #ffea00, 0 0 30px #ff4500, 0 0 60px #ff0000;
+            animation: flame 1s infinite alternate;
+            margin: 40px 0;
+            text-align: center;
+        }
+        @keyframes flame { from { transform: scale(1); } to { transform: scale(1.03); } }
+
+        .container {
+            background: rgba(15, 15, 15, 0.95);
+            border: 1px solid #ff4500;
+            padding: 30px;
+            border-radius: 25px;
+            width: 100%;
+            max-width: 800px;
+            box-shadow: 0 0 30px rgba(255, 69, 0, 0.2);
         }
 
-        @keyframes flicker {
-            0% { text-shadow: 0 0 10px #fff, 0 0 20px #ff4500, 0 0 40px #ff4500, 0 0 80px #ff0000; }
-            100% { text-shadow: 0 0 5px #fff, 0 0 10px #ff4500, 0 0 20px #ff4500, 0 0 40px #ff0000; transform: scale(1.02); }
+        /* SS GALERİSİ */
+        .gallery { display: flex; gap: 15px; margin: 25px 0; justify-content: center; flex-wrap: wrap; }
+        .gallery img { 
+            width: 45%; 
+            min-width: 280px;
+            border-radius: 15px; 
+            border: 2px solid #222; 
+            transition: 0.4s;
+        }
+        .gallery img:hover { border-color: #ff4500; transform: scale(1.05); }
+
+        /* MAKALE VE ÖZET KISMI */
+        .article {
+            text-align: left;
+            line-height: 1.8;
+            color: #ccc;
+            background: rgba(255,255,255,0.03);
+            padding: 20px;
+            border-radius: 15px;
+            margin-top: 20px;
+        }
+        .article h2 { color: #ff4500; font-size: 1.4rem; margin-top: 0; }
+        .price-tag {
+            font-size: 1.5rem;
+            color: #00ff00;
+            font-weight: bold;
+            display: block;
+            margin-top: 15px;
+            text-align: center;
+            border: 1px dashed #00ff00;
+            padding: 10px;
         }
 
-        .btn-link {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: white;
-            color: black;
+        .insta-btn {
+            display: block;
+            background: #ff4500;
+            color: white;
             text-decoration: none;
             padding: 15px;
-            border-radius: 15px;
-            margin-top: 30px;
+            border-radius: 12px;
+            text-align: center;
             font-weight: bold;
+            margin-top: 25px;
             transition: 0.3s;
         }
-        .btn-link:hover { transform: translateY(-5px); background: #ff4500; color: white; }
+        .insta-btn:hover { background: #fff; color: #000; }
 
-        .work-item {
-            background: rgba(255,255,255,0.05);
-            padding: 15px;
-            border-radius: 12px;
-            margin-top: 20px;
-            border-left: 3px solid var(--primary);
-            text-align: left;
-        }
-
-        #music-player { display: none; }
+        #play-btn { background: #222; color: #ff4500; border: 1px solid #ff4500; padding: 10px 20px; border-radius: 50px; cursor: pointer; margin-bottom: 20px; font-weight: bold; }
     </style>
 </head>
-<body onclick="playMusic()">
-    
+<body>
+
+    <div class="burning-title">FAXSTTER INC</div>
+
+    <button id="play-btn" onclick="playMusic()">🎵 MÜZİĞİ BAŞLAT (KATANA)</button>
+
     <div class="container">
-        <div class="fire-text">FAXSTTER INC</div>
-        <p style="color: #aaa; letter-spacing: 2px;">SYSTEM ARCHITECT</p>
-
-        <a href="https://instagram.com/faxstter" target="_blank" class="btn-link">
-            📸 @faxstter
-        </a>
-
-        <div class="work-item">
-            <strong>Yaptığım İşler</strong>
-            <span style="display:block; font-size: 0.8rem; color: #888; margin-top:5px;">Highrise Bot Ordusu & Python Geliştirici</span>
+        <div class="gallery">
+            <img src="ss1.png" alt="Sistem Paneli">
+            <img src="ss2.png" alt="Bot Ordusu">
         </div>
 
-        <p style="font-size: 0.6rem; color: #333; margin-top: 40px;">Müzik: Deha Inc. - Katana (Tıkla ve Oynat)</p>
+        <div class="article">
+            <h2>🔱 Gelişmiş Oyun Otomasyon Sistemleri</h2>
+            <p>
+                Dijital evrenlerde sınırları zorlayan, tamamen Python tabanlı ve yapay zeka destekli oyun botları kodluyorum. 
+                Sistemlerim, sıradan bir yazılımın ötesinde; yüksek hızda tepki süresi, 7/24 kesintisiz çalışma garantisi ve 
+                "God Mode" yetkilendirmesi ile donatılmıştır. Odalarınızı yöneten, kullanıcı etkileşimini maksimize eden 
+                ve tüm süreci otomatize eden profesyonel paneller kuruyorum.
+            </p>
+            <p>
+                Görsellerde gördüğünüz üzere, karmaşık komut dizinlerini basit bir kullanıcı arayüzüne indirgeyerek 
+                herkesin kullanabileceği güçte sistemler inşa ediyorum. Güvenlik, hız ve estetik önceliğimdir.
+            </p>
+            <span class="price-tag">💰 SİSTEM KURULUM ÜCRETİ: 200 TL</span>
+        </div>
+
+        <a href="https://instagram.com/faxstter" target="_blank" class="insta-btn">📩 SİPARİŞ VE İLETİŞİM İÇİN TIKLA</a>
     </div>
 
-    <iframe id="music-player" src="https://www.youtube.com/embed/n4p_f24Blyc?enablejsapi=1&autoplay=1&loop=1&playlist=n4p_f24Blyc" allow="autoplay"></iframe>
+    <div id="player"></div>
 
     <script>
+        var tag = document.createElement('script');
+        tag.src = "https://www.youtube.com/iframe_api";
+        var firstScriptTag = document.getElementsByTagName('script')[0];
+        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+        var player;
+        function onYouTubeIframeAPIReady() {
+            player = new YT.Player('player', {
+                height: '0', width: '0', videoId: 'n4p_f24Blyc',
+                playerVars: { 'autoplay': 1, 'loop': 1, 'playlist': 'n4p_f24Blyc' }
+            });
+        }
         function playMusic() {
-            var iframe = document.getElementById('music-player');
-            iframe.src += "&autoplay=1";
-            console.log("Müzik tetiklendi");
+            player.playVideo();
+            document.getElementById('play-btn').innerText = "🔊 KATANA ÇALIYOR...";
         }
     </script>
 </body>
