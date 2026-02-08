@@ -2,50 +2,112 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <title>FAXSSY | Official Portal</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Faxssy | Official Portal</title>
     <style>
+        :root {
+            --primary: #ff0055; /* Deha Inc. havası için canlı kırmızı/pembe */
+            --bg: #050505;
+        }
         body {
-            background: #050505;
-            color: #00f2ff;
-            font-family: 'Courier New', Courier, monospace;
+            background-color: var(--bg);
+            color: white;
+            font-family: 'Inter', sans-serif;
+            margin: 0;
             display: flex;
-            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        /* Arka Plan Hareketli Işık */
+        .glow {
+            position: fixed;
+            width: 400px;
+            height: 400px;
+            background: var(--primary);
+            filter: blur(150px);
+            opacity: 0.15;
+            z-index: -1;
+            animation: move 8s infinite alternate;
+        }
+        @keyframes move { from { top: 0%; left: 0%; } to { top: 70%; left: 70%; } }
+
+        /* Ana Kart Tasarımı */
+        .container {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(15px);
+            padding: 40px;
+            border-radius: 30px;
+            text-align: center;
+            width: 90%;
+            max-width: 450px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+        }
+
+        h1 { font-size: 2.5rem; letter-spacing: 5px; margin: 10px 0; text-shadow: 0 0 15px var(--primary); }
+        .tag { color: var(--primary); font-weight: bold; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 2px; }
+
+        /* Instagram Butonu */
+        .btn-link {
+            display: flex;
             align-items: center;
             justify-content: center;
-            height: 100vh;
-            margin: 0;
-            overflow: hidden;
-        }
-        .glitch {
-            font-size: 50px;
+            background: white;
+            color: black;
+            text-decoration: none;
+            padding: 15px;
+            border-radius: 15px;
+            margin-top: 30px;
             font-weight: bold;
-            text-transform: uppercase;
-            position: relative;
-            text-shadow: 0 0 15px #00f2ff;
-            animation: pulse 2s infinite;
+            transition: 0.3s;
         }
-        @keyframes pulse {
-            0% { transform: scale(1); opacity: 1; }
-            50% { transform: scale(1.05); opacity: 0.8; }
-            100% { transform: scale(1); opacity: 1; }
+        .btn-link:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(255,255,255,0.1); }
+
+        /* Yapılan İşler Alanı */
+        .work-section { margin-top: 40px; text-align: left; }
+        .work-item {
+            background: rgba(255,255,255,0.05);
+            padding: 15px;
+            border-radius: 12px;
+            margin-bottom: 10px;
+            border-left: 3px solid var(--primary);
         }
-        .info {
-            margin-top: 20px;
-            padding: 20px;
-            border: 1px solid #00f2ff;
-            background: rgba(0, 242, 255, 0.1);
-            border-radius: 10px;
-            text-align: center;
-        }
+        .work-item span { display: block; font-size: 0.9rem; color: #888; }
+
+        /* Müzik Player (Gizli) */
+        #music-player { display: none; }
     </style>
 </head>
 <body>
-    <div class="glitch">FAXSSY PORTAL</div>
-    <div class="info">
-        <p>🚀 Highrise Bot Developer</p>
-        <p>🔱 God Mode: ACTIVE</p>
-        <p>🤖 Bot Ordu Komutanı</p>
+    <div class="glow"></div>
+    
+    <div class="container">
+        <div class="tag">System Architect</div>
+        <h1>FAXSSY</h1>
+        <p style="color: #aaa;">Geliştirici & Tasarımcı</p>
+
+        <a href="https://instagram.com/faxstter" target="_blank" class="btn-link">
+            📸 @faxstter
+        </a>
+
+        <div class="work-section">
+            <h3 style="font-size: 1rem; margin-bottom: 15px; color: var(--primary);">YAPTIĞIM İŞLER</h3>
+            <div class="work-item">
+                <strong>Highrise Bot Ordusu</strong>
+                <span>4+ Botun eşzamanlı yönetimi ve God Mode entegrasyonu.</span>
+            </div>
+            <div class="work-item">
+                <strong>Otomasyon Sistemleri</strong>
+                <span>Python tabanlı oda yönetim botları.</span>
+            </div>
+        </div>
+
+        <p style="font-size: 0.7rem; color: #444; margin-top: 30px;">Müzik: Deha Inc. - ISQ (Aktif)</p>
     </div>
-    <p style="margin-top: 50px; color: #555;">Sistem Yükleniyor...</p>
+
+    <iframe id="music-player" src="https://www.youtube.com/embed/PjEPr9-qK9w?autoplay=1&loop=1&playlist=PjEPr9-qK9w" allow="autoplay"></iframe>
+
 </body>
 </html>
