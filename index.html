@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Faxstter Inc | Bass Boosted</title>
+    <title>Faxstter Inc | Final Edition</title>
     <style>
         body { background: #000; color: #00ff00; font-family: 'Courier New', Courier, monospace; display: flex; flex-direction: column; align-items: center; min-height: 100vh; margin: 0; overflow-x: hidden; }
         #matrix-canvas { position: fixed; top: 0; left: 0; z-index: -1; opacity: 0.2; }
@@ -11,22 +11,39 @@
         #overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; display: flex; align-items: center; justify-content: center; z-index: 9999; }
         #start-btn { padding: 15px 40px; font-size: 1.5rem; background: #000; color: #00ff00; border: 2px solid #00ff00; cursor: pointer; font-weight: bold; box-shadow: 0 0 20px #00ff00; }
 
-        /* BASS İLE ALEVLENEN BAŞLIK */
+        /* ALEVLENEN BAŞLIK */
         .faxstter-title { 
-            font-size: clamp(2rem, 8vw, 4rem); 
+            font-size: clamp(2rem, 8vw, 4.5rem); 
             font-weight: 900; 
             color: #000; 
             -webkit-text-stroke: 1.5px #00ff00;
-            text-shadow: 0 0 10px #00ff00; 
             margin-top: 20px; 
             text-align: center;
-            transition: text-shadow 0.1s ease, transform 0.1s ease;
+            text-shadow: 0 0 10px #00ff00;
+            transition: 0.1s ease;
         }
 
-        #lyrics-display { margin: 40px 0; height: 60px; display: flex; align-items: center; justify-content: center; }
-        #lyrics-text { font-size: 2rem; font-weight: 900; color: #fff; text-transform: uppercase; text-shadow: 0 0 20px #00ff00; text-align: center; }
+        /* SAĞ TARAFA SABİTLENEN ALTYAZI */
+        #lyrics-container {
+            position: fixed;
+            right: 20px;
+            top: 40%;
+            width: 250px;
+            text-align: right;
+            pointer-events: none;
+        }
+        #lyrics-text { 
+            font-size: 1.8rem; 
+            font-weight: 900; 
+            color: #fff; 
+            text-transform: uppercase; 
+            text-shadow: 0 0 15px #00ff00, 0 0 30px #00ff00;
+            line-height: 1.2;
+            transition: 0.3s ease;
+        }
 
-        .container { width: 95%; max-width: 900px; display: flex; flex-direction: column; gap: 15px; align-items: center; }
+        .container { width: 95%; max-width: 900px; display: flex; flex-direction: column; gap: 15px; align-items: center; margin-right: 200px; } /* Altyazıya yer açmak için içeriği sola çektik */
+        
         .btn-row { display: flex; gap: 10px; width: 100%; flex-wrap: wrap; justify-content: center; }
         .panel-btn { padding: 15px 20px; font-weight: bold; cursor: pointer; text-transform: uppercase; background: #000; border: 2px solid #00ff00; color: #00ff00; transition: 0.3s; font-size: 0.8rem; }
         
@@ -36,7 +53,9 @@
         .content-display { display: none; width: 100%; margin-top: 20px; background: rgba(0,0,0,0.8); border: 1px solid currentColor; padding: 20px; border-radius: 10px; }
         .ss-img { width: 100%; border: 1px solid #444; margin-bottom: 15px; border-radius: 5px; cursor: pointer; }
 
-        .info-text { color: #ff00ff; line-height: 1.8; }
+        .social-container { margin-top: 30px; display: flex; gap: 15px; }
+        .social-link { color: #00ff00; text-decoration: none; border: 1px solid #00ff00; padding: 10px 20px; font-size: 0.9rem; text-transform: uppercase; }
+        .social-link:hover { background: rgba(0, 255, 0, 0.2); }
     </style>
 </head>
 <body onclick="closeAll(event)">
@@ -44,13 +63,13 @@
     <canvas id="matrix-canvas"></canvas>
 
     <div id="overlay">
-        <button id="start-btn" onclick="initPortal()">[ SİSTEMİ ALEVLENDİR ]</button>
+        <button id="start-btn" onclick="initPortal()">[ SİSTEMİ BAŞLAT ]</button>
     </div>
 
     <div class="faxstter-title" id="main-title">FAXSTTER INC</div>
 
-    <div id="lyrics-display">
-        <div id="lyrics-text">POLİSE ANLAT BENİ SENİ FARE</div>
+    <div id="lyrics-container">
+        <div id="lyrics-text">SİSTEM BEKLENİYOR...</div>
     </div>
 
     <div class="container">
@@ -70,13 +89,16 @@
             <img src="tool_ss2.png" class="ss-img">
         </div>
 
-        <div id="info-display" class="content-display">
-            <div class="info-text">
-                <h2 style="text-align: center;">🔱 FAXSTTER SERVICES 🔱</h2>
-                <p>💰 <b>ÖZEL TOOL YAPIMI:</b> Size özel otomasyonlar kodlanır.</p>
-                <p>🌐 <b>SİTE TASARIMI:</b> Elite temalı siteler yapılır.</p>
-                <p style="text-align: center; margin-top: 20px;"><i>DM üzerinden ulaşabilirsiniz. 💀</i></p>
+        <div id="info-display" class="content-display" style="color:#ff00ff">
+            <div style="text-align:center;">
+                <h3>🔱 FAXSTTER SERVICES 🔱</h3>
+                <p>💰 ÖZEL TOOL YAPIMI & SİTE TASARIMI YAPILIR. 💀</p>
             </div>
+        </div>
+
+        <div class="social-container">
+            <a href="https://instagram.com/faxstter" target="_blank" class="social-link">Instagram</a>
+            <a href="https://open.spotify.com/user/faxssy" target="_blank" class="social-link">Spotify Hesabım</a>
         </div>
     </div>
 
@@ -85,40 +107,52 @@
     </audio>
 
     <script>
-        let audioCtx, analyser, dataArray, source;
+        let audioCtx, analyser, dataArray;
+        const lyrics = [
+            { time: 0, text: "FAXSTTER INC" },
+            { time: 2, text: "POLİSE ANLAT" },
+            { time: 4, text: "BENİ SENİ FARE" },
+            { time: 6, text: "ICQ 2000" },
+            { time: 8, text: "BATMAN DEĞİLİM" },
+            { time: 10, text: "ATM'LERİ PATLAT" }
+        ];
 
         function initPortal() {
             document.getElementById('overlay').style.display = 'none';
             const audio = document.getElementById('bg-music');
             audio.play();
 
-            // BASS ANALİZ SİSTEMİ
             audioCtx = new (window.AudioContext || window.webkitAudioContext)();
             analyser = audioCtx.createAnalyser();
-            source = audioCtx.createMediaElementSource(audio);
+            const source = audioCtx.createMediaElementSource(audio);
             source.connect(analyser);
             analyser.connect(audioCtx.destination);
-            analyser.fftSize = 256;
+            analyser.fftSize = 128;
             dataArray = new Uint8Array(analyser.frequencyBinCount);
             
-            animateBass();
+            animate();
         }
 
-        function animateBass() {
-            requestAnimationFrame(animateBass);
+        function animate() {
+            requestAnimationFrame(animate);
             analyser.getByteFrequencyData(dataArray);
-
-            // Bas frekanslarını (ilk birkaç bar) al
-            let bass = dataArray[1] + dataArray[2] + dataArray[3];
-            bass = bass / 3; 
-
+            
+            // ALEV EFEKTİ (BAS GÜCÜNE GÖRE)
+            let bass = dataArray[1]; 
             const title = document.getElementById('main-title');
-            if (bass > 180) { // Bas vurduğunda
-                title.style.textShadow = `0 0 ${bass/5}px #00ff00, 0 0 ${bass/2}px #00ff00`;
-                title.style.transform = `scale(${1 + bass/1000})`;
+            if (bass > 190) {
+                title.style.textShadow = `0 0 ${bass/4}px #00ff00, 0 0 ${bass/2}px #ff0000`;
+                title.style.transform = `scale(1.1)`;
             } else {
                 title.style.textShadow = "0 0 10px #00ff00";
                 title.style.transform = "scale(1)";
+            }
+
+            // ANLIK ALTYAZI GÜNCELLEME
+            const currentTime = document.getElementById('bg-music').currentTime;
+            const currentLyric = lyrics.filter(l => l.time <= currentTime).pop();
+            if (currentLyric) {
+                document.getElementById('lyrics-text').innerText = currentLyric.text;
             }
         }
 
