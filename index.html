@@ -3,36 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Faxstter Inc | Developer Portal</title>
+    <title>Faxstter Inc | Official</title>
     <style>
-        body { background: #000; color: #fff; font-family: 'Inter', sans-serif; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; margin: 0; overflow: hidden; position: relative; }
+        body { background: #000; color: #fff; font-family: 'Segoe UI', sans-serif; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; min-height: 100vh; margin: 0; overflow-x: hidden; }
         
-        /* YEŞİL MATRIX ARKA PLAN */
+        /* MATRIX BACKGROUND */
         #matrix-canvas { position: fixed; top: 0; left: 0; z-index: -1; opacity: 0.3; }
 
-        /* GİRİŞ EKRANI */
-        #overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; display: flex; align-items: center; justify-content: center; z-index: 999; transition: 0.8s; }
-        #start-btn { padding: 25px 50px; font-size: 1.8rem; background: #00ff00; color: black; border: none; border-radius: 50px; cursor: pointer; font-weight: 900; box-shadow: 0 0 30px #00ff00; transition: 0.3s; }
+        /* OVERLAY / START */
+        #overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 9999; transition: 1s; }
+        #start-btn { padding: 20px 60px; font-size: 2rem; background: #00ff00; color: #000; border: none; border-radius: 50px; cursor: pointer; font-weight: 900; box-shadow: 0 0 40px #00ff00; }
 
-        /* ALEVLİ BAŞLIK */
-        .burning-title {
-            font-size: clamp(2rem, 10vw, 4rem); text-transform: uppercase; font-weight: 900; color: #fff;
-            text-shadow: 0 0 10px #ffea00, 0 0 30px #ff4500, 0 0 60px #ff0000;
-            animation: flame 1s infinite alternate; margin-bottom: 20px; text-align: center;
-        }
-        @keyframes flame { from { transform: scale(1); } to { transform: scale(1.05); } }
+        /* HEADER */
+        .header-title { font-size: 3rem; font-weight: 900; color: #fff; text-shadow: 0 0 20px #ff4500; margin-top: 40px; text-transform: uppercase; letter-spacing: 5px; }
 
-        .container { background: rgba(10, 10, 10, 0.95); border: 1px solid #00ff00; padding: 30px; border-radius: 25px; width: 90%; max-width: 450px; text-align: center; backdrop-filter: blur(10px); box-shadow: 0 0 20px rgba(0, 255, 0, 0.3); }
+        /* MAIN CARD */
+        .main-card { background: rgba(10, 10, 10, 0.9); border: 2px solid #00ff00; border-radius: 20px; width: 90%; max-width: 500px; padding: 25px; margin-top: 30px; box-shadow: 0 0 30px rgba(0, 255, 0, 0.2); }
         
-        .nav-btn { display: block; background: #111; color: #00ff00; text-decoration: none; padding: 15px; border-radius: 12px; margin-top: 10px; font-weight: bold; border: 1px solid #00ff00; cursor: pointer; transition: 0.3s; text-align: center; }
-        .spotify-btn { background: #1DB954; color: white; border: none; }
-        .insta-btn { background: #ff4500; color: white; border: none; }
-        .nav-btn:hover { background: #00ff00; color: #000; }
+        .bot-info { border: 1px solid #00ff00; border-radius: 15px; padding: 15px; text-align: left; margin-bottom: 20px; }
+        .bot-header { color: #5bc0de; font-weight: bold; font-size: 1.2rem; display: flex; align-items: center; gap: 10px; }
+        .bot-header span { background: #5bc0de; color: #000; font-size: 0.7rem; padding: 2px 5px; border-radius: 4px; }
 
-        /* MODAL (PENCERE) SİSTEMİ */
-        .modal { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 90%; max-width: 550px; background: #0a0a0a; border: 2px solid #00ff00; padding: 20px; border-radius: 20px; z-index: 1000; overflow-y: auto; max-height: 85vh; }
-        .modal-bg { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 999; }
-        .modal img { width: 100%; border-radius: 15px; margin-bottom: 15px; border: 2px solid #333; }
+        .bot-body { font-size: 0.9rem; line-height: 1.6; margin-top: 10px; color: #ddd; }
+        .bot-footer { margin-top: 15px; border-top: 1px solid #333; padding-top: 10px; color: #ffea00; font-weight: bold; }
+
+        /* BUTTONS */
+        .btn-group { display: flex; flex-direction: column; gap: 12px; }
+        .nav-btn { display: flex; align-items: center; justify-content: center; gap: 10px; padding: 14px; border-radius: 12px; text-decoration: none; font-weight: bold; transition: 0.3s; cursor: pointer; border: none; font-size: 1rem; }
+        
+        .btn-active { background: #00ff00; color: #000; }
+        .btn-spotify { background: #1DB954; color: #fff; }
+        .btn-insta { background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); color: #fff; }
+
+        /* BOT MODAL IMAGES */
+        .bot-gallery { display: none; margin-top: 20px; border: 2px dashed #00ff00; padding: 10px; border-radius: 15px; }
+        .bot-gallery img { width: 100%; border-radius: 10px; margin-bottom: 10px; border: 1px solid #444; }
     </style>
 </head>
 <body>
@@ -40,54 +45,54 @@
     <canvas id="matrix-canvas"></canvas>
 
     <div id="overlay">
-        <button id="start-btn" onclick="initPortal()">🔱 SİSTEMİ BAŞLAT</button>
+        <h1 style="color: #00ff00; margin-bottom: 30px;">🔱 FAXSTTER INC VER 2.0</h1>
+        <button id="start-btn" onclick="initSystem()">SİSTEMİ YÜKLE</button>
     </div>
 
-    <div class="burning-title">FAXSTTER INC</div>
+    <div class="header-title">FAXSTTER INC 🔱</div>
 
-    <div class="container">
-        <button class="nav-btn" style="background: #00ff00; color: black;" onclick="openModal('bot-modal')">🤖 AKTİF BOTLAR & PANEL</button>
-        <button class="nav-btn" onclick="openModal('about-modal')">ℹ️ HAKKIMDA</button>
-        <a href="http://googleusercontent.com/spotify.com/6" target="_blank" class="nav-btn spotify-btn">🎧 SPOTIFY PROFILIM</a>
-        <a href="https://instagram.com/faxstter" target="_blank" class="nav-btn insta-btn">📸 INSTAGRAM (@faxstter)</a>
+    <div class="main-card">
+        <div class="bot-info">
+            <div class="bot-header">faxstter0101 <span>BOT</span> 🔱</div>
+            <div class="bot-body">
+                💃 <b>DANS:</b> 1-200 arası sayı yaz.<br>
+                🎲 <b>RANDOM:</b> '!random' yaz ve şaşır!<br>
+                ⏹️ <b>STOP:</b> 'stop' yazarak durdur.<br>
+                🎯 <b>TAKIP:</b> Sahibime özel takip sistemi.
+            </div>
+            <div class="bot-footer">👑 POWER BY @FAXSSY 💎</div>
+        </div>
+
+        <div class="btn-group">
+            <button class="nav-btn btn-active" onclick="toggleGallery()">🤖 AKTİF BOTLAR & PANEL</button>
+            <a href="http://googleusercontent.com/spotify.com/7" target="_blank" class="nav-btn btn-spotify">🎧 Spotify Profilim</a>
+            <a href="https://instagram.com/faxstter" target="_blank" class="nav-btn btn-insta">📸 Instagram (@faxstter)</a>
+        </div>
+
+        <div id="bot-gallery" class="bot-gallery">
+            <img src="bot_ss1.png" alt="Panel 1">
+            <img src="bot_ss2.png" alt="Panel 2">
+        </div>
     </div>
 
     <audio id="bg-music" loop>
         <source src="music.mp3" type="audio/mpeg">
     </audio>
 
-    <div id="modal-bg" class="modal-bg" onclick="closeAllModals()"></div>
-    
-    <div id="about-modal" class="modal">
-        <h2 style="color: #00ff00;">🔱 FAXSTTER SİSTEMLERİ</h2>
-        <p style="color: #ccc;">@faxssy tarafından geliştirilen, 7/24 aktif oyun otomasyonları ve yönetim panelleri.</p>
-        <div style="border: 1px dashed #00ff00; color: #00ff00; padding: 15px; text-align: center; font-weight: bold;">💰 SİSTEM KURULUMU: 200 TL</div>
-        <button class="nav-btn" style="width:100%; margin-top:20px" onclick="closeAllModals()">KAPAT</button>
-    </div>
-
-    <div id="bot-modal" class="modal">
-        <h2 style="color: #00ff00; text-align:center;">🤖 BOT VE PANEL GÖRÜNÜMÜ</h2>
-        <img src="bot_ss1.png" alt="Bot Listesi">
-        <img src="bot_ss2.png" alt="Faxstter Panel Menüsü">
-        <button class="nav-btn" style="width:100%" onclick="closeAllModals()">GERİ DÖN</button>
-    </div>
-
     <script>
-        // MATRIX EFEKTİ (YEŞİL)
+        // MATRIX ANIMATION
         const canvas = document.getElementById('matrix-canvas');
         const ctx = canvas.getContext('2d');
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-        const letters = "01";
+        canvas.width = window.innerWidth; canvas.height = window.innerHeight;
+        const letters = "0101010101010101";
         const fontSize = 16;
         const columns = canvas.width / fontSize;
-        const drops = [];
-        for (let x = 0; x < columns; x++) drops[x] = 1;
+        const drops = Array(Math.floor(columns)).fill(1);
 
         function drawMatrix() {
             ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
             ctx.fillRect(0, 0, canvas.width, canvas.height);
-            ctx.fillStyle = "#00ff00"; 
+            ctx.fillStyle = "#00ff00";
             ctx.font = fontSize + "px monospace";
             for (let i = 0; i < drops.length; i++) {
                 const text = letters.charAt(Math.floor(Math.random() * letters.length));
@@ -96,25 +101,20 @@
                 drops[i]++;
             }
         }
-        setInterval(drawMatrix, 33);
+        setInterval(drawMatrix, 35);
 
-        // PORTALI BAŞLAT VE MÜZİĞİ AÇ
-        function initPortal() {
+        // START SYSTEM
+        function initSystem() {
             document.getElementById('overlay').style.opacity = '0';
-            setTimeout(() => { document.getElementById('overlay').style.display = 'none'; }, 800);
-            
-            const audio = document.getElementById('bg-music');
-            audio.play().catch(e => console.log("Müzik dosyası yüklenemedi. 'music.mp3' olarak yüklediğinden emin ol."));
+            setTimeout(() => { document.getElementById('overlay').style.display = 'none'; }, 1000);
+            const music = document.getElementById('bg-music');
+            music.play().catch(() => alert("Lütfen müzik için 'music.mp3' dosyasını yükle!"));
         }
 
-        function openModal(id) {
-            document.getElementById(id).style.display = 'block';
-            document.getElementById('modal-bg').style.display = 'block';
-        }
-
-        function closeAllModals() {
-            document.querySelectorAll('.modal').forEach(m => m.style.display = 'none');
-            document.getElementById('modal-bg').style.display = 'none';
+        // GALLERY TOGGLE
+        function toggleGallery() {
+            const gallery = document.getElementById('bot-gallery');
+            gallery.style.display = (gallery.style.display === 'block') ? 'none' : 'block';
         }
     </script>
 </body>
