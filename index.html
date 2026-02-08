@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Faxstter Inc | Elite Portal</title>
+    <title>Faxstter Inc | Bass Boosted</title>
     <style>
         body { background: #000; color: #00ff00; font-family: 'Courier New', Courier, monospace; display: flex; flex-direction: column; align-items: center; min-height: 100vh; margin: 0; overflow-x: hidden; }
         #matrix-canvas { position: fixed; top: 0; left: 0; z-index: -1; opacity: 0.2; }
@@ -11,15 +11,21 @@
         #overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; display: flex; align-items: center; justify-content: center; z-index: 9999; }
         #start-btn { padding: 15px 40px; font-size: 1.5rem; background: #000; color: #00ff00; border: 2px solid #00ff00; cursor: pointer; font-weight: bold; box-shadow: 0 0 20px #00ff00; }
 
-        .faxstter-title { font-size: clamp(2rem, 8vw, 4rem); font-weight: 900; color: #000; -webkit-text-stroke: 1.5px #00ff00; text-shadow: 0 0 15px #00ff00; margin-top: 20px; text-align: center; }
+        /* BASS İLE ALEVLENEN BAŞLIK */
+        .faxstter-title { 
+            font-size: clamp(2rem, 8vw, 4rem); 
+            font-weight: 900; 
+            color: #000; 
+            -webkit-text-stroke: 1.5px #00ff00;
+            text-shadow: 0 0 10px #00ff00; 
+            margin-top: 20px; 
+            text-align: center;
+            transition: text-shadow 0.1s ease, transform 0.1s ease;
+        }
 
-        /* EDİT TARZI ALTYAZI */
         #lyrics-display { margin: 40px 0; height: 60px; display: flex; align-items: center; justify-content: center; }
-        #lyrics-text { font-size: 2rem; font-weight: 900; color: #fff; text-transform: uppercase; text-shadow: 0 0 20px #00ff00, 0 0 40px #00ff00; animation: lyric-pulse 1.5s infinite; text-align: center; }
+        #lyrics-text { font-size: 2rem; font-weight: 900; color: #fff; text-transform: uppercase; text-shadow: 0 0 20px #00ff00; text-align: center; }
 
-        @keyframes lyric-pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.7; transform: scale(1.05); } }
-
-        /* BUTONLAR */
         .container { width: 95%; max-width: 900px; display: flex; flex-direction: column; gap: 15px; align-items: center; }
         .btn-row { display: flex; gap: 10px; width: 100%; flex-wrap: wrap; justify-content: center; }
         .panel-btn { padding: 15px 20px; font-weight: bold; cursor: pointer; text-transform: uppercase; background: #000; border: 2px solid #00ff00; color: #00ff00; transition: 0.3s; font-size: 0.8rem; }
@@ -27,17 +33,10 @@
         .tool-red { border-color: #ff0000; color: #ff0000; }
         .info-pink { border-color: #ff00ff; color: #ff00ff; }
         
-        .panel-btn:hover { transform: translateY(-3px); box-shadow: 0 5px 20px currentColor; }
-
-        /* İÇERİK */
-        .content-display { display: none; width: 100%; margin-top: 20px; animation: slideUp 0.4s ease; background: rgba(0,0,0,0.8); border: 1px solid currentColor; padding: 20px; border-radius: 10px; }
+        .content-display { display: none; width: 100%; margin-top: 20px; background: rgba(0,0,0,0.8); border: 1px solid currentColor; padding: 20px; border-radius: 10px; }
         .ss-img { width: 100%; border: 1px solid #444; margin-bottom: 15px; border-radius: 5px; cursor: pointer; }
 
-        /* BİLGİLENDİRME METNİ */
-        .info-text { color: #ff00ff; line-height: 1.8; text-align: left; }
-        .info-text b { color: #fff; text-shadow: 0 0 5px #ff00ff; }
-
-        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .info-text { color: #ff00ff; line-height: 1.8; }
     </style>
 </head>
 <body onclick="closeAll(event)">
@@ -45,10 +44,10 @@
     <canvas id="matrix-canvas"></canvas>
 
     <div id="overlay">
-        <button id="start-btn" onclick="initPortal()">[ SİSTEMİ BAŞLAT ]</button>
+        <button id="start-btn" onclick="initPortal()">[ SİSTEMİ ALEVLENDİR ]</button>
     </div>
 
-    <div class="faxstter-title">FAXSTTER INC</div>
+    <div class="faxstter-title" id="main-title">FAXSTTER INC</div>
 
     <div id="lyrics-display">
         <div id="lyrics-text">POLİSE ANLAT BENİ SENİ FARE</div>
@@ -74,16 +73,10 @@
         <div id="info-display" class="content-display">
             <div class="info-text">
                 <h2 style="text-align: center;">🔱 FAXSTTER SERVICES 🔱</h2>
-                <hr border="1" color="#ff00ff">
-                <p>💰 <b>ÖZEL TOOL YAPIMI:</b> İstediğiniz her türlü panel ve otomasyon aracı profesyonel olarak kodlanır.</p>
-                <p>🌐 <b>SİTE TASARIMI:</b> Size özel, yüksek güvenlikli ve modern (Hacker/Elite) temalı web siteleri hazırlanır.</p>
-                <p>🚀 <b>HIZLI TESLİMAT:</b> Tüm projeler en kısa sürede, anahtar teslim şekilde sunulur.</p>
-                <p style="text-align: center; margin-top: 20px;"><i>Detaylı bilgi ve fiyatlandırma için DM üzerinden ulaşabilirsiniz.</i></p>
+                <p>💰 <b>ÖZEL TOOL YAPIMI:</b> Size özel otomasyonlar kodlanır.</p>
+                <p>🌐 <b>SİTE TASARIMI:</b> Elite temalı siteler yapılır.</p>
+                <p style="text-align: center; margin-top: 20px;"><i>DM üzerinden ulaşabilirsiniz. 💀</i></p>
             </div>
-        </div>
-
-        <div style="margin-top: 40px;">
-            <a href="https://instagram.com/faxstter" target="_blank" style="color:#ff00ff; text-decoration:none; border:1px solid; padding:10px;">DM ULAŞ</a>
         </div>
     </div>
 
@@ -92,9 +85,41 @@
     </audio>
 
     <script>
+        let audioCtx, analyser, dataArray, source;
+
         function initPortal() {
             document.getElementById('overlay').style.display = 'none';
-            document.getElementById('bg-music').play(); //
+            const audio = document.getElementById('bg-music');
+            audio.play();
+
+            // BASS ANALİZ SİSTEMİ
+            audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            analyser = audioCtx.createAnalyser();
+            source = audioCtx.createMediaElementSource(audio);
+            source.connect(analyser);
+            analyser.connect(audioCtx.destination);
+            analyser.fftSize = 256;
+            dataArray = new Uint8Array(analyser.frequencyBinCount);
+            
+            animateBass();
+        }
+
+        function animateBass() {
+            requestAnimationFrame(animateBass);
+            analyser.getByteFrequencyData(dataArray);
+
+            // Bas frekanslarını (ilk birkaç bar) al
+            let bass = dataArray[1] + dataArray[2] + dataArray[3];
+            bass = bass / 3; 
+
+            const title = document.getElementById('main-title');
+            if (bass > 180) { // Bas vurduğunda
+                title.style.textShadow = `0 0 ${bass/5}px #00ff00, 0 0 ${bass/2}px #00ff00`;
+                title.style.transform = `scale(${1 + bass/1000})`;
+            } else {
+                title.style.textShadow = "0 0 10px #00ff00";
+                title.style.transform = "scale(1)";
+            }
         }
 
         function openSec(id, event) {
@@ -115,8 +140,7 @@
         canvas.width = window.innerWidth; canvas.height = window.innerHeight;
         const drops = Array(Math.floor(canvas.width / 20)).fill(1);
         function draw() {
-            ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = "rgba(0, 0, 0, 0.05)"; ctx.fillRect(0, 0, canvas.width, canvas.height);
             ctx.fillStyle = "#00ff00";
             drops.forEach((y, i) => {
                 ctx.fillText(Math.random() > 0.5 ? "0" : "1", i * 20, y * 20);
