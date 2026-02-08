@@ -3,41 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Faxstter Inc | Official</title>
+    <title>Faxstter Inc | Bot Portal</title>
     <style>
-        body { background: #000; color: #fff; font-family: 'Segoe UI', sans-serif; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; min-height: 100vh; margin: 0; overflow-x: hidden; }
+        /* TEMEL TASARIM: SİYAH VE YEŞİL */
+        body { background: #000; color: #00ff00; font-family: 'Courier New', Courier, monospace; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; min-height: 100vh; margin: 0; overflow-x: hidden; }
         
-        /* MATRIX BACKGROUND */
-        #matrix-canvas { position: fixed; top: 0; left: 0; z-index: -1; opacity: 0.3; }
+        /* MATRIX ARKA PLAN */
+        #matrix-canvas { position: fixed; top: 0; left: 0; z-index: -1; opacity: 0.4; }
 
-        /* OVERLAY / START */
-        #overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 9999; transition: 1s; }
-        #start-btn { padding: 20px 60px; font-size: 2rem; background: #00ff00; color: #000; border: none; border-radius: 50px; cursor: pointer; font-weight: 900; box-shadow: 0 0 40px #00ff00; }
+        /* GİRİŞ EKRANI */
+        #overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; display: flex; align-items: center; justify-content: center; z-index: 9999; }
+        #start-btn { padding: 15px 40px; font-size: 1.5rem; background: #000; color: #00ff00; border: 2px solid #00ff00; cursor: pointer; font-weight: bold; text-transform: uppercase; letter-spacing: 3px; box-shadow: 0 0 20px #00ff00; }
 
-        /* HEADER */
-        .header-title { font-size: 3rem; font-weight: 900; color: #fff; text-shadow: 0 0 20px #ff4500; margin-top: 40px; text-transform: uppercase; letter-spacing: 5px; }
+        /* BAŞLIK: SİYAH-YEŞİL KAPLAMA */
+        .faxstter-title { font-size: clamp(2.5rem, 8vw, 5rem); font-weight: 900; color: #000; -webkit-text-stroke: 1.5px #00ff00; text-shadow: 0 0 15px #00ff00; margin-top: 50px; text-transform: uppercase; letter-spacing: 10px; text-align: center; }
 
-        /* MAIN CARD */
-        .main-card { background: rgba(10, 10, 10, 0.9); border: 2px solid #00ff00; border-radius: 20px; width: 90%; max-width: 500px; padding: 25px; margin-top: 30px; box-shadow: 0 0 30px rgba(0, 255, 0, 0.2); }
-        
-        .bot-info { border: 1px solid #00ff00; border-radius: 15px; padding: 15px; text-align: left; margin-bottom: 20px; }
-        .bot-header { color: #5bc0de; font-weight: bold; font-size: 1.2rem; display: flex; align-items: center; gap: 10px; }
-        .bot-header span { background: #5bc0de; color: #000; font-size: 0.7rem; padding: 2px 5px; border-radius: 4px; }
+        /* ANA KONTEYNER */
+        .container { width: 90%; max-width: 600px; margin-top: 40px; text-align: center; }
 
-        .bot-body { font-size: 0.9rem; line-height: 1.6; margin-top: 10px; color: #ddd; }
-        .bot-footer { margin-top: 15px; border-top: 1px solid #333; padding-top: 10px; color: #ffea00; font-weight: bold; }
+        /* BOT BUTONU */
+        .bot-trigger { background: #000; color: #00ff00; border: 2px solid #00ff00; padding: 15px 30px; font-size: 1.2rem; font-weight: bold; cursor: pointer; text-transform: uppercase; letter-spacing: 2px; transition: 0.3s; width: 100%; margin-bottom: 20px; }
+        .bot-trigger:hover { background: #00ff00; color: #000; box-shadow: 0 0 30px #00ff00; }
 
-        /* BUTTONS */
-        .btn-group { display: flex; flex-direction: column; gap: 12px; }
-        .nav-btn { display: flex; align-items: center; justify-content: center; gap: 10px; padding: 14px; border-radius: 12px; text-decoration: none; font-weight: bold; transition: 0.3s; cursor: pointer; border: none; font-size: 1rem; }
-        
-        .btn-active { background: #00ff00; color: #000; }
-        .btn-spotify { background: #1DB954; color: #fff; }
-        .btn-insta { background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); color: #fff; }
+        /* SS'LERİN ÇIKACAĞI ALAN */
+        #bot-display { display: none; animation: fadeIn 0.8s ease; }
+        .ss-img { width: 100%; border: 2px solid #00ff00; border-radius: 5px; margin-bottom: 20px; box-shadow: 0 0 15px rgba(0, 255, 0, 0.3); }
 
-        /* BOT MODAL IMAGES */
-        .bot-gallery { display: none; margin-top: 20px; border: 2px dashed #00ff00; padding: 10px; border-radius: 15px; }
-        .bot-gallery img { width: 100%; border-radius: 10px; margin-bottom: 10px; border: 1px solid #444; }
+        /* SOSYAL MEDYA */
+        .social-link { display: inline-block; color: #00ff00; text-decoration: none; border: 1px solid #00ff00; padding: 10px 20px; margin: 10px; font-size: 0.8rem; text-transform: uppercase; }
+        .social-link:hover { background: rgba(0, 255, 0, 0.1); }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
     </style>
 </head>
 <body>
@@ -45,76 +41,63 @@
     <canvas id="matrix-canvas"></canvas>
 
     <div id="overlay">
-        <h1 style="color: #00ff00; margin-bottom: 30px;">🔱 FAXSTTER INC VER 2.0</h1>
-        <button id="start-btn" onclick="initSystem()">SİSTEMİ YÜKLE</button>
+        <button id="start-btn" onclick="bootSystem()">[ EXECUTE_SYSTEM ]</button>
     </div>
 
-    <div class="header-title">FAXSTTER INC 🔱</div>
+    <div class="faxstter-title">FAXSTTER INC</div>
 
-    <div class="main-card">
-        <div class="bot-info">
-            <div class="bot-header">faxstter0101 <span>BOT</span> 🔱</div>
-            <div class="bot-body">
-                💃 <b>DANS:</b> 1-200 arası sayı yaz.<br>
-                🎲 <b>RANDOM:</b> '!random' yaz ve şaşır!<br>
-                ⏹️ <b>STOP:</b> 'stop' yazarak durdur.<br>
-                🎯 <b>TAKIP:</b> Sahibime özel takip sistemi.
-            </div>
-            <div class="bot-footer">👑 POWER BY @FAXSSY 💎</div>
+    <div class="container">
+        <button class="bot-trigger" onclick="toggleBots()">🤖 AKTİF BOTLAR & PANEL</button>
+
+        <div id="bot-display">
+            <img src="bot_ss1.png" class="ss-img" alt="Faxstter Bot Commands">
+            <img src="bot_ss2.png" class="ss-img" alt="Faxstter Panel List">
         </div>
 
-        <div class="btn-group">
-            <button class="nav-btn btn-active" onclick="toggleGallery()">🤖 AKTİF BOTLAR & PANEL</button>
-            <a href="http://googleusercontent.com/spotify.com/7" target="_blank" class="nav-btn btn-spotify">🎧 Spotify Profilim</a>
-            <a href="https://instagram.com/faxstter" target="_blank" class="nav-btn btn-insta">📸 Instagram (@faxstter)</a>
-        </div>
-
-        <div id="bot-gallery" class="bot-gallery">
-            <img src="bot_ss1.png" alt="Panel 1">
-            <img src="bot_ss2.png" alt="Panel 2">
+        <div style="margin-top: 50px;">
+            <a href="https://instagram.com/faxstter" target="_blank" class="social-link">INSTAGRAM</a>
+            <a href="http://googleusercontent.com/spotify.com/9" target="_blank" class="social-link">SPOTIFY</a>
         </div>
     </div>
 
-    <audio id="bg-music" loop>
+    <audio id="bg-audio" loop>
         <source src="music.mp3" type="audio/mpeg">
     </audio>
 
     <script>
-        // MATRIX ANIMATION
+        // MATRIX RAIN SCRIPT
         const canvas = document.getElementById('matrix-canvas');
         const ctx = canvas.getContext('2d');
         canvas.width = window.innerWidth; canvas.height = window.innerHeight;
-        const letters = "0101010101010101";
+        const alphabet = "0101010101";
         const fontSize = 16;
         const columns = canvas.width / fontSize;
-        const drops = Array(Math.floor(columns)).fill(1);
+        const rainDrops = Array.from({ length: columns }).fill(1);
 
-        function drawMatrix() {
+        function draw() {
             ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
             ctx.fillRect(0, 0, canvas.width, canvas.height);
             ctx.fillStyle = "#00ff00";
             ctx.font = fontSize + "px monospace";
-            for (let i = 0; i < drops.length; i++) {
-                const text = letters.charAt(Math.floor(Math.random() * letters.length));
-                ctx.fillText(text, i * fontSize, drops[i] * fontSize);
-                if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0;
-                drops[i]++;
+            for (let i = 0; i < rainDrops.length; i++) {
+                const text = alphabet.charAt(Math.floor(Math.random() * alphabet.length));
+                ctx.fillText(text, i * fontSize, rainDrops[i] * fontSize);
+                if (rainDrops[i] * fontSize > canvas.height && Math.random() > 0.975) rainDrops[i] = 0;
+                rainDrops[i]++;
             }
         }
-        setInterval(drawMatrix, 35);
+        setInterval(draw, 30);
 
-        // START SYSTEM
-        function initSystem() {
-            document.getElementById('overlay').style.opacity = '0';
-            setTimeout(() => { document.getElementById('overlay').style.display = 'none'; }, 1000);
-            const music = document.getElementById('bg-music');
-            music.play().catch(() => alert("Lütfen müzik için 'music.mp3' dosyasını yükle!"));
+        // SİSTEMİ BAŞLAT VE MÜZİĞİ AÇ
+        function bootSystem() {
+            document.getElementById('overlay').style.display = 'none';
+            document.getElementById('bg-audio').play();
         }
 
-        // GALLERY TOGGLE
-        function toggleGallery() {
-            const gallery = document.getElementById('bot-gallery');
-            gallery.style.display = (gallery.style.display === 'block') ? 'none' : 'block';
+        // SS'LERİ GÖSTER/GİZLE
+        function toggleBots() {
+            const display = document.getElementById('bot-display');
+            display.style.display = (display.style.display === "block") ? "none" : "block";
         }
     </script>
 </body>
