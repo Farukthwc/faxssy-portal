@@ -3,129 +3,118 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Faxstter Inc | Hacker Portal</title>
+    <title>Faxstter Inc | Live Portal</title>
     <style>
-        body { background: #000; color: #00ff00; font-family: 'Courier New', Courier, monospace; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; min-height: 100vh; margin: 0; overflow-x: hidden; }
-        
-        #matrix-canvas { position: fixed; top: 0; left: 0; z-index: -1; opacity: 0.4; }
+        body { background: #000; color: #00ff00; font-family: 'Courier New', Courier, monospace; display: flex; flex-direction: column; align-items: center; min-height: 100vh; margin: 0; overflow-x: hidden; cursor: crosshair; }
+        #matrix-canvas { position: fixed; top: 0; left: 0; z-index: -1; opacity: 0.3; }
 
+        /* GİRİŞ */
         #overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; display: flex; align-items: center; justify-content: center; z-index: 9999; }
-        #start-btn { padding: 15px 40px; font-size: 1.5rem; background: #000; color: #00ff00; border: 2px solid #00ff00; cursor: pointer; font-weight: bold; text-transform: uppercase; letter-spacing: 3px; box-shadow: 0 0 20px #00ff00; }
+        #start-btn { padding: 15px 40px; font-size: 1.5rem; background: #000; color: #00ff00; border: 2px solid #00ff00; cursor: pointer; font-weight: bold; box-shadow: 0 0 20px #00ff00; }
 
-        /* DOLGUN VE GLITCH EFEKTLİ BAŞLIK */
-        .faxstter-title { 
-            font-size: clamp(2.5rem, 10vw, 6rem); 
-            font-weight: 900; 
-            color: #000; 
-            -webkit-text-stroke: 2.5px #00ff00;
-            text-shadow: 0 0 20px #00ff00; 
-            margin-top: 50px; 
-            text-transform: uppercase; 
-            letter-spacing: 8px; 
-            text-align: center;
-            animation: glitch 2.5s infinite;
-        }
+        /* BAŞLIK */
+        .faxstter-title { font-size: clamp(2rem, 8vw, 5rem); font-weight: 900; color: #000; -webkit-text-stroke: 2px #00ff00; text-shadow: 0 0 20px #00ff00; margin-top: 30px; animation: glitch 2s infinite; text-align: center; }
 
-        @keyframes glitch {
-            0% { text-shadow: 2px 0 #00ff00, -2px 0 #ff0000; transform: translate(0); }
-            5% { text-shadow: -2px 0 #00ff00, 2px 0 #ff0000; transform: translate(-2px, 1px); }
-            10% { transform: translate(0); }
-            100% { transform: translate(0); }
-        }
+        /* ALTYAZI (LYRICS) */
+        #lyrics-container { width: 100%; background: rgba(0, 255, 0, 0.1); border-top: 1px solid #00ff00; border-bottom: 1px solid #00ff00; margin: 20px 0; padding: 10px 0; overflow: hidden; white-space: nowrap; }
+        #lyrics-text { display: inline-block; font-size: 1.2rem; font-weight: bold; color: #00ff00; animation: marquee 15s linear infinite; }
 
-        .container { width: 90%; max-width: 800px; margin-top: 40px; display: flex; flex-direction: column; align-items: center; }
+        @keyframes marquee { from { transform: translateX(100%); } to { transform: translateX(-100%); } }
 
-        /* BUTON GRUBU - YAN YANA DİZİLİM */
-        .button-wrapper { display: flex; gap: 20px; width: 100%; justify-content: center; flex-wrap: wrap; }
+        /* BUTONLAR */
+        .container { width: 90%; max-width: 700px; display: flex; flex-direction: column; gap: 20px; align-items: center; }
+        .btn-row { display: flex; gap: 15px; width: 100%; flex-wrap: wrap; }
+        .panel-btn { flex: 1; padding: 15px; font-weight: bold; cursor: pointer; text-transform: uppercase; background: #000; transition: 0.3s; border: 2px solid #00ff00; color: #00ff00; min-width: 250px; }
+        .tool-red { border-color: #ff0000; color: #ff0000; }
+        .panel-btn:hover { transform: scale(1.02); box-shadow: 0 0 25px currentColor; }
 
-        .panel-btn { background: #000; color: #00ff00; border: 2px solid #00ff00; padding: 15px 25px; font-size: 1rem; font-weight: bold; cursor: pointer; text-transform: uppercase; letter-spacing: 2px; transition: 0.3s; flex: 1; max-width: 300px; }
-        .panel-btn:hover { background: #00ff00; color: #000; box-shadow: 0 0 30px #00ff00; }
+        /* GÖRSELLER */
+        .content-display { display: none; width: 100%; margin-top: 20px; animation: zoomIn 0.4s ease; }
+        .ss-img { width: 100%; border: 2px solid #333; margin-bottom: 10px; border-radius: 10px; cursor: pointer; }
 
-        /* İÇERİK ALANLARI */
-        .content-display { display: none; width: 100%; margin-top: 25px; animation: fadeIn 0.8s ease; }
-        .ss-img { width: 100%; border: 2px solid #00ff00; margin-bottom: 15px; box-shadow: 0 0 15px rgba(0, 255, 0, 0.3); }
+        .social-link { color: #00ff00; text-decoration: none; border: 1px solid #00ff00; padding: 10px 20px; margin: 10px; font-size: 0.8rem; }
 
-        /* SOSYAL LİNKLER */
-        .social-container { margin-top: 40px; display: flex; gap: 15px; }
-        .social-link { color: #00ff00; text-decoration: none; border: 1px solid #00ff00; padding: 10px 20px; font-size: 0.8rem; text-transform: uppercase; transition: 0.3s; }
-        .social-link:hover { background: rgba(0, 255, 0, 0.2); }
-
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes glitch { 0% { transform: translate(0); } 5% { transform: translate(-2px, 2px); } 10% { transform: translate(2px, -2px); } 15% { transform: translate(0); } }
+        @keyframes zoomIn { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
     </style>
 </head>
-<body>
+<body onclick="closeIfEmpty(event)">
 
     <canvas id="matrix-canvas"></canvas>
 
     <div id="overlay">
-        <button id="start-btn" onclick="bootSystem()">[ EXECUTE_SYSTEM ]</button>
+        <button id="start-btn" onclick="initPortal()">[ SİSTEMİ BAŞLAT ]</button>
     </div>
 
     <div class="faxstter-title">FAXSTTER INC</div>
 
-    <div class="container">
-        
-        <div class="button-wrapper">
-            <button class="panel-btn" onclick="toggleDisplay('bot-display')">🤖 AKTİF BOTLAR & PANEL</button>
-            <button class="panel-btn" onclick="toggleDisplay('tool-display')">⚙️ ÖZEL PANEL TOOLLARIMIZ</button>
-        </div>
-
-        <div id="bot-display" class="content-display">
-            <img src="bot_ss1.png" class="ss-img" alt="Bot Komutları">
-            <img src="bot_ss2.png" class="ss-img" alt="Bot Listesi">
-        </div>
-
-        <div id="tool-display" class="content-display">
-            <img src="tool_ss1.png" class="ss-img" alt="Ad Soyad Sorgu">
-            <img src="tool_ss2.png" class="ss-img" alt="Hack-Camera Panel">
-        </div>
-
-        <div class="social-container">
-            <a href="https://instagram.com/faxstter" target="_blank" class="social-link">Ulaşmak İçin</a>
-            <a href="https://spotify.com/faxssy" target="_blank" class="social-link">Spotify Hesabım</a>
+    <div id="lyrics-container">
+        <div id="lyrics-text">
+            🎶 "I see you on the ICQ... 2000 model Opel'le patlat ATM'leri... I'm Batman değilim Batman!" 🎶
         </div>
     </div>
 
-    <audio id="bg-audio" loop>
+    <div class="container">
+        <div class="btn-row">
+            <button class="panel-btn" onclick="showSection('bot-display', event)">🤖 AKTİF BOTLAR & PANEL</button>
+            <button class="panel-btn tool-red" onclick="showSection('tool-display', event)">⚙️ ÖZEL PANEL TOOLLARIMIZ</button>
+        </div>
+
+        <div id="bot-display" class="content-display">
+            <img src="bot_ss1.png" class="ss-img" onclick="this.parentElement.style.display='none'">
+            <img src="bot_ss2.png" class="ss-img" onclick="this.parentElement.style.display='none'">
+        </div>
+
+        <div id="tool-display" class="content-display">
+            <img src="tool_ss1.png" class="ss-img" onclick="this.parentElement.style.display='none'">
+            <img src="tool_ss2.png" class="ss-img" onclick="this.parentElement.style.display='none'">
+        </div>
+
+        <div style="margin-top: 30px;">
+            <a href="https://instagram.com/faxstter" target="_blank" class="social-link">Ulaşmak İçin</a>
+            <a href="https://spotify.com" target="_blank" class="social-link">Spotify Hesabım</a>
+        </div>
+    </div>
+
+    <audio id="bg-music" loop>
         <source src="music.mp3" type="audio/mpeg">
     </audio>
 
     <script>
-        // MATRIX ANIMASYONU
+        function initPortal() {
+            document.getElementById('overlay').style.display = 'none';
+            document.getElementById('bg-music').play();
+        }
+
+        function showSection(id, event) {
+            event.stopPropagation(); // Butona basınca sayfa tıklaması tetiklenmesin
+            document.querySelectorAll('.content-display').forEach(d => d.style.display = 'none');
+            document.getElementById(id).style.display = 'block';
+        }
+
+        function closeIfEmpty(event) {
+            // Eğer tıklanan yer bir resim veya buton değilse her şeyi kapat
+            if (!event.target.closest('.ss-img') && !event.target.closest('.panel-btn')) {
+                document.querySelectorAll('.content-display').forEach(d => d.style.display = 'none');
+            }
+        }
+
+        // Matrix Efekti
         const canvas = document.getElementById('matrix-canvas');
         const ctx = canvas.getContext('2d');
         canvas.width = window.innerWidth; canvas.height = window.innerHeight;
-        const alphabet = "01010101";
-        const rainDrops = Array.from({ length: Math.floor(canvas.width / 16) }).fill(1);
-
+        const drops = Array(Math.floor(canvas.width / 16)).fill(1);
         function draw() {
             ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
             ctx.fillRect(0, 0, canvas.width, canvas.height);
             ctx.fillStyle = "#00ff00";
-            ctx.font = "16px monospace";
-            for (let i = 0; i < rainDrops.length; i++) {
-                const text = alphabet.charAt(Math.floor(Math.random() * alphabet.length));
-                ctx.fillText(text, i * 16, rainDrops[i] * 16);
-                if (rainDrops[i] * 16 > canvas.height && Math.random() > 0.975) rainDrops[i] = 0;
-                rainDrops[i]++;
-            }
+            drops.forEach((y, i) => {
+                ctx.fillText(Math.floor(Math.random() * 2), i * 16, y * 16);
+                if (y * 16 > canvas.height && Math.random() > 0.975) drops[i] = 0;
+                drops[i]++;
+            });
         }
-        setInterval(draw, 30);
-
-        // SISTEMI AC VE MUZIGI CAL
-        function bootSystem() {
-            document.getElementById('overlay').style.display = 'none';
-            document.getElementById('bg-audio').play(); //
-        }
-
-        // MENU GECISLERI
-        function toggleDisplay(id) {
-            // Önce tüm içerikleri kapat
-            document.querySelectorAll('.content-display').forEach(d => d.style.display = 'none');
-            // İstenen içeriği aç
-            const target = document.getElementById(id);
-            target.style.display = "block";
-        }
+        setInterval(draw, 33);
     </script>
 </body>
 </html>
