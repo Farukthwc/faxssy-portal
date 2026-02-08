@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Faxstter Inc | Bot Portal</title>
+    <title>Faxstter Inc | Hacker Portal</title>
     <style>
         body { background: #000; color: #00ff00; font-family: 'Courier New', Courier, monospace; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; min-height: 100vh; margin: 0; overflow-x: hidden; }
         
@@ -12,39 +12,42 @@
         #overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; display: flex; align-items: center; justify-content: center; z-index: 9999; }
         #start-btn { padding: 15px 40px; font-size: 1.5rem; background: #000; color: #00ff00; border: 2px solid #00ff00; cursor: pointer; font-weight: bold; text-transform: uppercase; letter-spacing: 3px; box-shadow: 0 0 20px #00ff00; }
 
-        /* YENİ GLITCH (TİTREME) ANİMASYONLU BAŞLIK */
+        /* DOLGUN VE GLITCH EFEKTLİ BAŞLIK */
         .faxstter-title { 
             font-size: clamp(2.5rem, 10vw, 6rem); 
             font-weight: 900; 
             color: #000; 
-            -webkit-text-stroke: 2px #00ff00;
-            text-shadow: 0 0 15px #00ff00; 
+            -webkit-text-stroke: 2.5px #00ff00;
+            text-shadow: 0 0 20px #00ff00; 
             margin-top: 50px; 
             text-transform: uppercase; 
             letter-spacing: 8px; 
             text-align: center;
-            position: relative;
-            animation: glitch 2s infinite;
+            animation: glitch 2.5s infinite;
         }
 
         @keyframes glitch {
             0% { text-shadow: 2px 0 #00ff00, -2px 0 #ff0000; transform: translate(0); }
-            5% { text-shadow: -2px 0 #00ff00, 2px 0 #ff0000; transform: translate(-2px, 2px); }
-            10% { text-shadow: 2px 0 #00ff00, -2px 0 #ff0000; transform: translate(2px, -2px); }
-            15% { transform: translate(0); }
+            5% { text-shadow: -2px 0 #00ff00, 2px 0 #ff0000; transform: translate(-2px, 1px); }
+            10% { transform: translate(0); }
             100% { transform: translate(0); }
         }
 
-        .container { width: 90%; max-width: 600px; margin-top: 40px; text-align: center; }
+        .container { width: 90%; max-width: 800px; margin-top: 40px; display: flex; flex-direction: column; align-items: center; }
 
-        .bot-trigger { background: #000; color: #00ff00; border: 2px solid #00ff00; padding: 15px 30px; font-size: 1.2rem; font-weight: bold; cursor: pointer; text-transform: uppercase; letter-spacing: 2px; transition: 0.3s; width: 100%; margin-bottom: 20px; }
-        .bot-trigger:hover { background: #00ff00; color: #000; box-shadow: 0 0 30px #00ff00; }
+        /* BUTON GRUBU - YAN YANA DİZİLİM */
+        .button-wrapper { display: flex; gap: 20px; width: 100%; justify-content: center; flex-wrap: wrap; }
 
-        #bot-display { display: none; animation: fadeIn 0.8s ease; }
-        .ss-img { width: 100%; border: 2px solid #00ff00; border-radius: 5px; margin-bottom: 20px; box-shadow: 0 0 15px rgba(0, 255, 0, 0.3); }
+        .panel-btn { background: #000; color: #00ff00; border: 2px solid #00ff00; padding: 15px 25px; font-size: 1rem; font-weight: bold; cursor: pointer; text-transform: uppercase; letter-spacing: 2px; transition: 0.3s; flex: 1; max-width: 300px; }
+        .panel-btn:hover { background: #00ff00; color: #000; box-shadow: 0 0 30px #00ff00; }
 
-        .social-container { margin-top: 50px; display: flex; flex-direction: column; align-items: center; gap: 15px; }
-        .social-link { color: #00ff00; text-decoration: none; border: 1px solid #00ff00; padding: 12px 25px; font-size: 0.9rem; text-transform: uppercase; width: fit-content; transition: 0.3s; }
+        /* İÇERİK ALANLARI */
+        .content-display { display: none; width: 100%; margin-top: 25px; animation: fadeIn 0.8s ease; }
+        .ss-img { width: 100%; border: 2px solid #00ff00; margin-bottom: 15px; box-shadow: 0 0 15px rgba(0, 255, 0, 0.3); }
+
+        /* SOSYAL LİNKLER */
+        .social-container { margin-top: 40px; display: flex; gap: 15px; }
+        .social-link { color: #00ff00; text-decoration: none; border: 1px solid #00ff00; padding: 10px 20px; font-size: 0.8rem; text-transform: uppercase; transition: 0.3s; }
         .social-link:hover { background: rgba(0, 255, 0, 0.2); }
 
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
@@ -61,16 +64,25 @@
     <div class="faxstter-title">FAXSTTER INC</div>
 
     <div class="container">
-        <button class="bot-trigger" onclick="toggleBots()">🤖 AKTİF BOTLAR & PANEL</button>
+        
+        <div class="button-wrapper">
+            <button class="panel-btn" onclick="toggleDisplay('bot-display')">🤖 AKTİF BOTLAR & PANEL</button>
+            <button class="panel-btn" onclick="toggleDisplay('tool-display')">⚙️ ÖZEL PANEL TOOLLARIMIZ</button>
+        </div>
 
-        <div id="bot-display">
-            <img src="bot_ss1.png" class="ss-img" alt="Faxstter Panel">
-            <img src="bot_ss2.png" class="ss-img" alt="Faxstter List">
+        <div id="bot-display" class="content-display">
+            <img src="bot_ss1.png" class="ss-img" alt="Bot Komutları">
+            <img src="bot_ss2.png" class="ss-img" alt="Bot Listesi">
+        </div>
+
+        <div id="tool-display" class="content-display">
+            <img src="tool_ss1.png" class="ss-img" alt="Ad Soyad Sorgu">
+            <img src="tool_ss2.png" class="ss-img" alt="Hack-Camera Panel">
         </div>
 
         <div class="social-container">
             <a href="https://instagram.com/faxstter" target="_blank" class="social-link">Ulaşmak İçin</a>
-            <a href="https://spotify.com" target="_blank" class="social-link">Spotify Hesabım</a>
+            <a href="https://spotify.com/faxssy" target="_blank" class="social-link">Spotify Hesabım</a>
         </div>
     </div>
 
@@ -79,36 +91,40 @@
     </audio>
 
     <script>
+        // MATRIX ANIMASYONU
         const canvas = document.getElementById('matrix-canvas');
         const ctx = canvas.getContext('2d');
         canvas.width = window.innerWidth; canvas.height = window.innerHeight;
         const alphabet = "01010101";
-        const fontSize = 16;
-        const columns = canvas.width / fontSize;
-        const rainDrops = Array.from({ length: columns }).fill(1);
+        const rainDrops = Array.from({ length: Math.floor(canvas.width / 16) }).fill(1);
 
         function draw() {
             ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
             ctx.fillRect(0, 0, canvas.width, canvas.height);
             ctx.fillStyle = "#00ff00";
-            ctx.font = fontSize + "px monospace";
+            ctx.font = "16px monospace";
             for (let i = 0; i < rainDrops.length; i++) {
                 const text = alphabet.charAt(Math.floor(Math.random() * alphabet.length));
-                ctx.fillText(text, i * fontSize, rainDrops[i] * fontSize);
-                if (rainDrops[i] * fontSize > canvas.height && Math.random() > 0.975) rainDrops[i] = 0;
+                ctx.fillText(text, i * 16, rainDrops[i] * 16);
+                if (rainDrops[i] * 16 > canvas.height && Math.random() > 0.975) rainDrops[i] = 0;
                 rainDrops[i]++;
             }
         }
         setInterval(draw, 30);
 
+        // SISTEMI AC VE MUZIGI CAL
         function bootSystem() {
             document.getElementById('overlay').style.display = 'none';
             document.getElementById('bg-audio').play(); //
         }
 
-        function toggleBots() {
-            const display = document.getElementById('bot-display');
-            display.style.display = (display.style.display === "block") ? "none" : "block";
+        // MENU GECISLERI
+        function toggleDisplay(id) {
+            // Önce tüm içerikleri kapat
+            document.querySelectorAll('.content-display').forEach(d => d.style.display = 'none');
+            // İstenen içeriği aç
+            const target = document.getElementById(id);
+            target.style.display = "block";
         }
     </script>
 </body>
