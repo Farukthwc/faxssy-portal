@@ -1,19 +1,20 @@
+
 <!DOCTYPE html>
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Faxstter Inc | Official Portal</title>
+    <title>Faxstter Inc | Developer Portal</title>
     <style>
         body { background: #000; color: #fff; font-family: 'Inter', sans-serif; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; margin: 0; overflow: hidden; position: relative; }
         
-        /* MATRIX ARKA PLAN */
-        #matrix-canvas { position: fixed; top: 0; left: 0; z-index: -1; opacity: 0.15; }
+        /* YEŞİL MATRIX ARKA PLAN */
+        #matrix-canvas { position: fixed; top: 0; left: 0; z-index: -1; opacity: 0.25; }
 
         /* GİRİŞ EKRANI */
         #overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; display: flex; align-items: center; justify-content: center; z-index: 999; transition: 0.8s; }
-        #start-btn { padding: 25px 50px; font-size: 1.8rem; background: #ff4500; color: white; border: none; border-radius: 50px; cursor: pointer; font-weight: 900; box-shadow: 0 0 30px #ff4500; transition: 0.3s; }
-        #start-btn:hover { transform: scale(1.1); box-shadow: 0 0 50px #ff4500; }
+        #start-btn { padding: 25px 50px; font-size: 1.8rem; background: #00ff00; color: black; border: none; border-radius: 50px; cursor: pointer; font-weight: 900; box-shadow: 0 0 30px #00ff00; transition: 0.3s; }
+        #start-btn:hover { transform: scale(1.1); box-shadow: 0 0 50px #00ff00; }
 
         /* ALEVLİ BAŞLIK */
         .burning-title {
@@ -23,20 +24,19 @@
         }
         @keyframes flame { from { transform: scale(1); } to { transform: scale(1.05); } }
 
-        .container { background: rgba(10, 10, 10, 0.9); border: 1px solid #ff4500; padding: 30px; border-radius: 25px; width: 90%; max-width: 500px; text-align: center; backdrop-filter: blur(5px); }
+        .container { background: rgba(10, 10, 10, 0.9); border: 1px solid #00ff00; padding: 30px; border-radius: 25px; width: 90%; max-width: 500px; text-align: center; backdrop-filter: blur(5px); box-shadow: 0 0 20px rgba(0, 255, 0, 0.2); }
         
         .gallery { display: flex; gap: 10px; margin: 20px 0; justify-content: center; }
         .gallery img { width: 48%; border-radius: 12px; border: 1px solid #333; transition: 0.4s; }
-        .gallery img:hover { border-color: #ff4500; transform: translateY(-5px); }
+        .gallery img:hover { border-color: #00ff00; transform: translateY(-5px); }
 
-        .nav-btn { display: block; background: #111; color: #ff4500; text-decoration: none; padding: 15px; border-radius: 12px; margin-top: 10px; font-weight: bold; border: 1px solid #ff4500; cursor: pointer; transition: 0.3s; }
+        .nav-btn { display: block; background: #111; color: #00ff00; text-decoration: none; padding: 15px; border-radius: 12px; margin-top: 10px; font-weight: bold; border: 1px solid #00ff00; cursor: pointer; transition: 0.3s; font-size: 0.9rem; }
+        .spotify-btn { background: #1DB954; color: white; border: none; }
         .insta-btn { background: #ff4500; color: white; border: none; }
-        .nav-btn:hover { background: #ff4500; color: white; }
+        .nav-btn:hover { opacity: 0.8; transform: scale(1.02); }
 
-        /* MODAL PENCERESİ */
-        #about-modal { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 85%; max-width: 600px; background: #0a0a0a; border: 2px solid #ff4500; padding: 30px; border-radius: 20px; z-index: 1000; box-shadow: 0 0 50px #000; }
         #modal-bg { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 999; }
-        .price-box { border: 1px dashed #00ff00; color: #00ff00; padding: 15px; text-align: center; font-weight: bold; margin-top: 20px; border-radius: 10px; }
+        #about-modal { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 85%; max-width: 600px; background: #0a0a0a; border: 2px solid #00ff00; padding: 30px; border-radius: 20px; z-index: 1000; }
     </style>
 </head>
 <body>
@@ -51,26 +51,27 @@
 
     <div class="container">
         <div class="gallery">
-            <img src="ss1.png" alt="Sistem Paneli">
-            <img src="ss2.png" alt="Bot Ordusu">
+            <img src="ss1.png" alt="Panel">
+            <img src="ss2.png" alt="Botlar">
         </div>
 
         <button class="nav-btn" onclick="openAbout()">ℹ️ HAKKIMDA / SİSTEM ÖZETİ</button>
+        <a href="https://open.spotify.com/user/317n7jof475f3idp4j7k5m2y7dpe" target="_blank" class="nav-btn spotify-btn">🎧 SPOTIFY PROFILIM</a>
         <a href="https://instagram.com/faxstter" target="_blank" class="nav-btn insta-btn">📸 INSTAGRAM (@faxstter)</a>
     </div>
 
     <div id="modal-bg" onclick="closeAbout()"></div>
     <div id="about-modal">
-        <h2 style="color: #ff4500;">🔱 Profesyonel Yazılım Çözümleri</h2>
-        <p style="color: #ccc; line-height: 1.6;">Tamamen Python tabanlı, yüksek hızda çalışan ve yapay zeka destekli oyun botları kodluyorum. 7/24 kesintisiz çalışma ve God Mode yetkileriyle donatılmış sistemler sunuyorum.</p>
-        <div class="price-box">💰 SİSTEM KURULUM ÜCRETİ: 200 TL</div>
-        <button class="nav-btn" style="width:100%" onclick="closeAbout()">SİSTEME DÖN</button>
+        <h2 style="color: #00ff00;">🔱 Profesyonel Yazılım Çözümleri</h2>
+        <p style="color: #ccc;">Python tabanlı, yüksek hızlı oyun botları ve profesyonel yönetim panelleri.</p>
+        <div style="border: 1px dashed #00ff00; color: #00ff00; padding: 15px; text-align: center; font-weight: bold; margin-top: 20px;">💰 ÜCRET: 200 TL</div>
+        <button class="nav-btn" style="width:100%; margin-top:20px" onclick="closeAbout()">SİSTEME DÖN</button>
     </div>
 
     <div id="player"></div>
 
     <script>
-        // MATRIX EFEKTİ SCRIPTİ
+        // YEŞİL MATRIX EFEKTİ
         const canvas = document.getElementById('matrix-canvas');
         const ctx = canvas.getContext('2d');
         canvas.width = window.innerWidth;
@@ -84,7 +85,7 @@
         function drawMatrix() {
             ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
             ctx.fillRect(0, 0, canvas.width, canvas.height);
-            ctx.fillStyle = "#ff4500"; // Alev renginde akan sayılar
+            ctx.fillStyle = "#00ff00"; 
             ctx.font = fontSize + "px monospace";
             for (let i = 0; i < drops.length; i++) {
                 const text = letters.charAt(Math.floor(Math.random() * letters.length));
@@ -95,7 +96,7 @@
         }
         setInterval(drawMatrix, 33);
 
-        // YOUTUBE VE PORTAL SCRIPTİ
+        // MÜZİK ALTYAPISI
         var tag = document.createElement('script');
         tag.src = "https://www.youtube.com/iframe_api";
         var firstScriptTag = document.getElementsByTagName('script')[0];
@@ -115,15 +116,8 @@
             player.playVideo();
         }
 
-        function openAbout() {
-            document.getElementById('about-modal').style.display = 'block';
-            document.getElementById('modal-bg').style.display = 'block';
-        }
-
-        function closeAbout() {
-            document.getElementById('about-modal').style.display = 'none';
-            document.getElementById('modal-bg').style.display = 'none';
-        }
+        function openAbout() { document.getElementById('about-modal').style.display = 'block'; document.getElementById('modal-bg').style.display = 'block'; }
+        function closeAbout() { document.getElementById('about-modal').style.display = 'none'; document.getElementById('modal-bg').style.display = 'none'; }
     </script>
 </body>
 </html>
