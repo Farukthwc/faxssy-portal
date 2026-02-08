@@ -3,9 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Faxstter Inc | Focused Terminal</title>
+    <title>Faxstter Inc | Brand Matrix</title>
     <style>
-        /* KAYDIRMA VE ODAK AYARLARI */
         body { 
             background: #000; 
             color: #00ff00; 
@@ -15,26 +14,25 @@
             display: flex; 
             flex-direction: column; 
             align-items: center; 
-            overflow-y: auto; /* Kaydırma aktif */
+            overflow-y: auto; 
             overflow-x: hidden;
         }
         
-        #matrix-canvas { position: fixed; top: 0; left: 0; z-index: -1; opacity: 0.1; }
+        /* DAHA BELİRGİN FAXSTTER MATRIX */
+        #matrix-canvas { position: fixed; top: 0; left: 0; z-index: -1; opacity: 0.25; }
 
-        /* GİRİŞ */
         #overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; display: flex; align-items: center; justify-content: center; z-index: 9999; }
-        #start-btn { padding: 15px 40px; font-size: 1.2rem; background: #000; color: #00ff00; border: 2px solid #00ff00; cursor: pointer; box-shadow: 0 0 20px #00ff00; }
+        #start-btn { padding: 15px 40px; font-size: 1.2rem; background: #000; color: #00ff00; border: 2px solid #00ff00; cursor: pointer; box-shadow: 0 0 20px #00ff00; font-weight: bold; }
 
-        /* KIRMIZI DÖNGÜSEL SÖZLER (SAĞ VE SOL) */
         .lyric-loop {
             position: fixed;
-            top: 20%;
-            width: 150px;
+            top: 25%;
+            width: 180px;
             color: #ff0000;
-            font-size: 0.9rem;
-            font-weight: bold;
+            font-size: 1rem;
+            font-weight: 900;
             text-shadow: 0 0 10px #ff0000;
-            opacity: 0.6;
+            opacity: 0.8;
             z-index: 5;
             pointer-events: none;
             text-transform: uppercase;
@@ -42,32 +40,29 @@
         .left-loop { left: 20px; text-align: left; }
         .right-loop { right: 20px; text-align: right; }
 
-        /* BAŞLIK */
-        .faxstter-title { font-size: clamp(2rem, 8vw, 4rem); font-weight: 900; color: #000; -webkit-text-stroke: 1.5px #00ff00; margin: 30px 0; text-shadow: 0 0 20px #00ff00; }
+        .faxstter-title { font-size: clamp(2rem, 8vw, 4.5rem); font-weight: 900; color: #000; -webkit-text-stroke: 1.5px #00ff00; margin: 40px 0; text-shadow: 0 0 25px #00ff00; text-align: center; }
 
-        /* ANA PANEL */
         .main-frame { 
-            width: 90%; 
-            max-width: 800px; 
-            background: rgba(0, 15, 0, 0.85); /* Daha koyu odak */
-            border: 1px solid #00ff00; 
-            padding: 25px; 
-            margin-bottom: 50px;
-            box-shadow: 0 0 30px rgba(0, 255, 0, 0.1);
+            width: 85%; 
+            max-width: 850px; 
+            background: rgba(0, 10, 0, 0.9); 
+            border: 1px solid rgba(0, 255, 0, 0.3); 
+            padding: 30px; 
+            margin-bottom: 60px;
+            box-shadow: 0 0 40px rgba(0, 0, 0, 1);
         }
 
-        .btn-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 15px; margin-bottom: 30px; }
-        .panel-btn { padding: 15px; background: #000; border: 1px solid #00ff00; color: #00ff00; cursor: pointer; font-weight: bold; text-transform: uppercase; transition: 0.3s; }
+        .btn-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 30px; }
+        .panel-btn { padding: 18px; background: transparent; border: 1px solid #00ff00; color: #00ff00; cursor: pointer; font-weight: bold; text-transform: uppercase; transition: 0.3s; }
         .tool-red { border-color: #ff0000; color: #ff0000; }
         .info-pink { border-color: #ff00ff; color: #ff00ff; }
-        .panel-btn:hover { box-shadow: 0 0 15px currentColor; transform: translateY(-2px); }
+        .panel-btn:hover { box-shadow: 0 0 20px currentColor; transform: translateY(-3px); background: rgba(0,255,0,0.05); }
 
-        /* İÇERİK ALANI */
         .content-area { display: none; width: 100%; animation: fadeIn 0.4s ease; }
-        .ss-img { width: 100%; border: 1px solid #333; margin-bottom: 20px; border-radius: 5px; }
+        .ss-img { width: 100%; border: 1px solid #00ff00; margin-bottom: 25px; border-radius: 4px; box-shadow: 0 0 20px rgba(0, 255, 0, 0.1); }
 
-        .social-links { display: flex; gap: 15px; justify-content: center; margin-top: 20px; border-top: 1px solid #111; padding-top: 20px; }
-        .social-link { color: #00ff00; text-decoration: none; font-size: 0.8rem; border: 1px solid; padding: 5px 10px; }
+        .social-links { display: flex; gap: 20px; justify-content: center; margin-top: 30px; border-top: 1px solid #222; padding-top: 20px; }
+        .social-link { color: #00ff00; text-decoration: none; font-size: 0.9rem; border: 1px solid; padding: 8px 15px; letter-spacing: 2px; }
 
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
     </style>
@@ -77,19 +72,19 @@
     <canvas id="matrix-canvas"></canvas>
 
     <div id="overlay">
-        <button id="start-btn" onclick="initPortal()">SİSTEMİ BAŞLAT</button>
+        <button id="start-btn" onclick="initPortal()">EXECUTE FAXSTTER_CORE</button>
     </div>
 
     <div class="lyric-loop left-loop" id="l-loop"></div>
     <div class="lyric-loop right-loop" id="r-loop"></div>
 
-    <div class="faxstter-title" id="main-title">FAXSTTER INC</div>
+    <div class="faxstter-title">FAXSTTER INC</div>
 
     <div class="main-frame">
         <div class="btn-grid">
-            <button class="panel-btn" onclick="toggleSec('bot-display', event)">🤖 BOTLAR</button>
-            <button class="panel-btn tool-red" onclick="toggleSec('tool-display', event)">⚙️ TOOLLAR</button>
-            <button class="panel-btn info-pink" onclick="toggleSec('info-display', event)">ℹ️ BİLGİ 💀</button>
+            <button class="panel-btn" onclick="toggleSec('bot-display', event)">🤖 AKTİF BOTLAR</button>
+            <button class="panel-btn tool-red" onclick="toggleSec('tool-display', event)">⚙️ ÖZEL TOOLLAR</button>
+            <button class="panel-btn info-pink" onclick="toggleSec('info-display', event)">ℹ️ BİLGİLENDİRME 💀</button>
         </div>
 
         <div id="bot-display" class="content-area">
@@ -104,12 +99,12 @@
 
         <div id="info-display" class="content-area" style="color:#ff00ff; text-align:center;">
             <h3>🔱 FAXSTTER SERVICES 🔱</h3>
-            <p>ÖZEL TOOL YAPIMI & SİTE TASARIMI YAPILIR. 💀</p>
+            <p style="font-size: 1.1rem;">ÖZEL TOOL YAPIMI & ELİTE SİTE TASARIMI YAPILIR. 💀</p>
         </div>
 
         <div class="social-links">
             <a href="https://instagram.com/faxstter" target="_blank" class="social-link">INSTAGRAM</a>
-            <a href="http://googleusercontent.com/spotify.com/4" target="_blank" class="social-link">SPOTIFY</a>
+            <a href="http://googleusercontent.com/spotify.com/5" target="_blank" class="social-link">SPOTIFY</a>
         </div>
     </div>
 
@@ -117,12 +112,10 @@
 
     <script>
         const songLyrics = ["POLİSE ANLAT", "BENİ SENİ FARE", "ICQ 2000", "BATMAN DEĞİLİM", "ATM PATLAT"];
-
+        
         function initPortal() {
             document.getElementById('overlay').style.display = 'none';
             document.getElementById('bg-music').play();
-            
-            // Kırmızı Söz Döngüsü Başlat
             startLyricLoops();
         }
 
@@ -130,21 +123,46 @@
             let i = 0;
             setInterval(() => {
                 const word = songLyrics[i % songLyrics.length];
-                const pL = document.createElement('div');
-                pL.innerText = word;
+                const pL = document.createElement('div'); pL.innerText = word;
                 document.getElementById('l-loop').prepend(pL);
-                
-                const pR = document.createElement('div');
-                pR.innerText = word;
+                const pR = document.createElement('div'); pR.innerText = word;
                 document.getElementById('r-loop').prepend(pR);
-
-                if(document.getElementById('l-loop').children.length > 8) {
+                if(document.getElementById('l-loop').children.length > 10) {
                     document.getElementById('l-loop').lastChild.remove();
                     document.getElementById('r-loop').lastChild.remove();
                 }
                 i++;
-            }, 1500);
+            }, 1200);
         }
+
+        // --- ÖZEL FAXSTTER MATRIX EFEKTİ ---
+        const canvas = document.getElementById('matrix-canvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth; canvas.height = window.innerHeight;
+
+        const text = "FAXSTTER";
+        const fontSize = 16;
+        const columns = canvas.width / fontSize;
+        const drops = Array.from({ length: columns }).fill(1);
+
+        function drawMatrix() {
+            ctx.fillStyle = "rgba(0, 0, 0, 0.08)";
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = "#00ff00";
+            ctx.font = fontSize + "px monospace";
+
+            for (let i = 0; i < drops.length; i++) {
+                // Rakam yerine markanı yazdırıyoruz
+                const char = text.charAt(Math.floor(Math.random() * text.length));
+                ctx.fillText(char, i * fontSize, drops[i] * fontSize);
+
+                if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                    drops[i] = 0;
+                }
+                drops[i]++;
+            }
+        }
+        setInterval(drawMatrix, 50);
 
         function toggleSec(id, event) {
             event.stopPropagation();
@@ -157,22 +175,6 @@
                 document.querySelectorAll('.content-area').forEach(d => d.style.display = 'none');
             }
         }
-
-        // Matrix Arka Plan
-        const canvas = document.getElementById('matrix-canvas');
-        const ctx = canvas.getContext('2d');
-        canvas.width = window.innerWidth; canvas.height = window.innerHeight;
-        const drops = Array(Math.floor(canvas.width / 20)).fill(1);
-        function draw() {
-            ctx.fillStyle = "rgba(0,0,0,0.1)"; ctx.fillRect(0,0,canvas.width,canvas.height);
-            ctx.fillStyle = "#004400"; // Daha koyu matrix
-            drops.forEach((y, i) => {
-                ctx.fillText(Math.floor(Math.random()*2), i*20, y*20);
-                if(y*20 > canvas.height && Math.random() > 0.98) drops[i] = 0;
-                drops[i]++;
-            });
-        }
-        setInterval(draw, 50);
     </script>
 </body>
 </html>
