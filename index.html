@@ -3,47 +3,51 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Faxstter Inc | Elite Terminal</title>
+    <title>Faxstter Inc | Edit Mode</title>
     <style>
-        body { background: #000; color: #00ff00; font-family: 'Courier New', Courier, monospace; margin: 0; overflow-x: hidden; min-height: 100vh; display: flex; flex-direction: column; align-items: center; }
+        body { background: #000; color: #00ff00; font-family: 'Courier New', Courier, monospace; margin: 0; overflow: hidden; min-height: 100vh; }
         #matrix-canvas { position: fixed; top: 0; left: 0; z-index: -1; opacity: 0.15; }
 
-        /* GİRİŞ EKRANI */
+        /* GİRİŞ */
         #overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; display: flex; align-items: center; justify-content: center; z-index: 9999; }
-        #start-btn { padding: 20px 50px; font-size: 1.5rem; background: #000; color: #00ff00; border: 2px solid #00ff00; cursor: pointer; font-weight: bold; box-shadow: 0 0 30px #00ff00; letter-spacing: 5px; }
+        #start-btn { padding: 20px 50px; font-size: 1.5rem; background: #000; color: #00ff00; border: 2px solid #00ff00; cursor: pointer; box-shadow: 0 0 30px #00ff00; letter-spacing: 5px; }
 
-        /* YAN SİSTEM LOGLARI (SÜSLEME) */
-        .side-logs { position: fixed; top: 0; height: 100%; width: 150px; font-size: 0.7rem; color: rgba(0, 255, 0, 0.3); padding: 10px; overflow: hidden; pointer-events: none; text-transform: uppercase; }
-        .left-log { left: 0; border-right: 1px solid rgba(0, 255, 0, 0.1); }
-        .right-log { right: 0; border-left: 1px solid rgba(0, 255, 0, 0.1); text-align: right; }
+        /* ALEVLENEN ANA BAŞLIK */
+        .faxstter-title { font-size: 4rem; font-weight: 900; color: #000; -webkit-text-stroke: 1.5px #00ff00; margin-top: 30px; text-align: center; text-shadow: 0 0 20px #00ff00; transition: 0.1s; }
 
-        /* BAŞLIK */
-        .faxstter-title { font-size: clamp(2.5rem, 10vw, 5rem); font-weight: 900; color: #000; -webkit-text-stroke: 1.5px #00ff00; margin-top: 40px; text-shadow: 0 0 15px #00ff00; transition: 0.1s; }
+        /* EDİT TARZI PATLAYAN SÖZLER */
+        #edit-lyrics { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 100; }
+        .lyric-word { 
+            position: absolute; 
+            font-size: 5rem; 
+            font-weight: 900; 
+            color: #fff; 
+            text-transform: uppercase; 
+            text-shadow: 0 0 30px #00ff00, 0 0 60px #ff0000; 
+            opacity: 0; 
+            transform: scale(0.5); 
+            transition: 0.1s ease-out;
+        }
+        .lyric-active { opacity: 1; transform: scale(1.2); animation: word-burn 0.5s forwards; }
 
-        /* SAĞ ALTYAZI (EDİT TARZI) */
-        #lyrics-container { position: fixed; right: 170px; top: 50%; transform: translateY(-50%); width: 300px; text-align: right; z-index: 10; }
-        #lyrics-text { font-size: 2.2rem; font-weight: 900; color: #fff; text-shadow: 0 0 20px #00ff00, 0 0 40px #ff0000; text-transform: uppercase; }
+        @keyframes word-burn {
+            0% { transform: scale(0.8); filter: blur(5px); }
+            50% { transform: scale(1.3); filter: blur(0px); text-shadow: 0 0 50px #ff0000; }
+            100% { opacity: 0; transform: scale(1.5); }
+        }
 
-        /* ANA KONTEYNER */
-        .main-frame { width: 80%; max-width: 1000px; border: 1px solid rgba(0, 255, 0, 0.2); background: rgba(0, 10, 0, 0.5); margin-top: 30px; padding: 30px; border-radius: 5px; box-shadow: inset 0 0 20px rgba(0, 255, 0, 0.05); }
-
-        .btn-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; width: 100%; }
-        .panel-btn { padding: 18px; font-weight: bold; cursor: pointer; text-transform: uppercase; background: transparent; border: 1px solid #00ff00; color: #00ff00; transition: 0.3s; position: relative; overflow: hidden; }
-        .panel-btn::before { content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: rgba(0, 255, 0, 0.1); transition: 0.4s; }
-        .panel-btn:hover::before { left: 0; }
-        .panel-btn:hover { box-shadow: 0 0 15px currentColor; transform: translateY(-2px); }
-
+        /* PANEL KUTUSU */
+        .main-frame { position: relative; width: 70%; max-width: 900px; border: 1px solid rgba(0, 255, 0, 0.2); background: rgba(0, 20, 0, 0.4); margin: 20px auto; padding: 20px; z-index: 10; }
+        .btn-grid { display: flex; gap: 10px; justify-content: center; }
+        .panel-btn { padding: 15px; background: #000; border: 1px solid #00ff00; color: #00ff00; cursor: pointer; font-weight: bold; }
         .tool-red { border-color: #ff0000; color: #ff0000; }
         .info-pink { border-color: #ff00ff; color: #ff00ff; }
 
-        /* İÇERİK */
-        .content-area { display: none; margin-top: 30px; width: 100%; animation: fadeIn 0.5s ease; }
-        .ss-img { width: 100%; border: 1px solid #00ff00; border-radius: 4px; margin-bottom: 15px; box-shadow: 0 0 25px rgba(0, 255, 0, 0.2); cursor: pointer; }
+        .content-area { display: none; margin-top: 20px; }
+        .ss-img { width: 100%; border: 1px solid #00ff00; margin-bottom: 10px; cursor: pointer; }
 
-        .social-bar { margin-top: 50px; display: flex; gap: 20px; border-top: 1px dashed rgba(0, 255, 0, 0.3); padding-top: 20px; }
-        .social-link { color: #00ff00; text-decoration: none; font-size: 0.8rem; letter-spacing: 2px; }
-
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        .social-links { margin-top: 20px; display: flex; gap: 20px; justify-content: center; }
+        .social-links a { color: #00ff00; text-decoration: none; font-size: 0.8rem; border: 1px solid; padding: 5px 10px; }
     </style>
 </head>
 <body onclick="closeAll(event)">
@@ -51,59 +55,49 @@
     <canvas id="matrix-canvas"></canvas>
 
     <div id="overlay">
-        <button id="start-btn" onclick="initPortal()">INITIALIZE_SISTEM</button>
+        <button id="start-btn" onclick="initPortal()">SİSTEMİ BAŞLAT</button>
     </div>
 
-    <div class="side-logs left-log" id="left-logs"></div>
-    <div class="side-logs right-log" id="right-logs"></div>
+    <div id="edit-lyrics"></div>
 
     <div class="faxstter-title" id="main-title">FAXSTTER INC</div>
 
-    <div id="lyrics-container">
-        <div id="lyrics-text">...</div>
-    </div>
-
     <div class="main-frame">
         <div class="btn-grid">
-            <button class="panel-btn" onclick="toggleSec('bot-display', event)">🤖 AKTİF BOTLAR</button>
-            <button class="panel-btn tool-red" onclick="toggleSec('tool-display', event)">⚙️ ÖZEL TOOLLAR</button>
-            <button class="panel-btn info-pink" onclick="toggleSec('info-display', event)">ℹ️ BİLGİLENDİRME 💀</button>
+            <button class="panel-btn" onclick="toggleSec('bot-display', event)">🤖 BOTLAR</button>
+            <button class="panel-btn tool-red" onclick="toggleSec('tool-display', event)">⚙️ TOOLLAR</button>
+            <button class="panel-btn info-pink" onclick="toggleSec('info-display', event)">ℹ️ BİLGİ 💀</button>
         </div>
 
-        <div id="bot-display" class="content-area">
-            <img src="bot_ss1.png" class="ss-img">
-            <img src="bot_ss2.png" class="ss-img">
-        </div>
-
-        <div id="tool-display" class="content-area">
-            <img src="tool_ss1.png" class="ss-img">
-            <img src="tool_ss2.png" class="ss-img">
-        </div>
-
+        <div id="bot-display" class="content-area"><img src="bot_ss1.png" class="ss-img"><img src="bot_ss2.png" class="ss-img"></div>
+        <div id="tool-display" class="content-area"><img src="tool_ss1.png" class="ss-img"><img src="tool_ss2.png" class="ss-img"></div>
         <div id="info-display" class="content-area" style="color:#ff00ff; text-align:center;">
             <h3>🔱 FAXSTTER SERVICES 🔱</h3>
-            <p>SİZE ÖZEL PANEL, BOT VE SİTE TASARIMI YAPILIR. 💀</p>
+            <p>ÖZEL TOOL & SİTE TASARIMI YAPILIR. 💀</p>
         </div>
 
-        <div class="social-bar">
-            <a href="https://instagram.com/faxstter" target="_blank" class="social-link">[ INSTAGRAM ]</a>
-            <a href="http://googleusercontent.com/spotify.com/3" target="_blank" class="social-link">[ SPOTIFY ]</a>
+        <div class="social-links">
+            <a href="https://instagram.com/faxstter" target="_blank">INSTAGRAM</a>
+            <a href="https://spotify.com" target="_blank">SPOTIFY</a>
         </div>
     </div>
 
-    <audio id="bg-music" loop>
-        <source src="music.mp3" type="audio/mpeg">
-    </audio>
+    <audio id="bg-music" loop><source src="music.mp3" type="audio/mpeg"></audio>
 
     <script>
-        let audioCtx, analyser, dataArray;
-        const lyrics = [
-            { time: 0, text: "FAXSTTER INC" },
-            { time: 2.5, text: "POLİSE ANLAT" },
-            { time: 4, text: "BENİ SENİ FARE" },
-            { time: 7, text: "ICQ 2000" },
-            { time: 9, text: "BATMAN DEĞİLİM" }
+        // Şarkı sözleri ve saniyeleri (ICQ Şarkısına göre ayarlı)
+        const lyricData = [
+            { time: 1.5, text: "POLİSE", x: '20%', y: '30%' },
+            { time: 2.2, text: "ANLAT", x: '70%', y: '50%' },
+            { time: 3.0, text: "BENİ", x: '30%', y: '70%' },
+            { time: 3.8, text: "SENİ", x: '60%', y: '20%' },
+            { time: 4.5, text: "FARE!", x: '50%', y: '50%' },
+            { time: 6.5, text: "ICQ!", x: '80%', y: '40%' },
+            { time: 8.0, text: "BATMAN", x: '10%', y: '60%' },
+            { time: 9.5, text: "DEĞİLİM!", x: '50%', y: '80%' }
         ];
+
+        let audioCtx, analyser, dataArray;
 
         function initPortal() {
             document.getElementById('overlay').style.display = 'none';
@@ -118,7 +112,6 @@
             analyser.fftSize = 64;
             dataArray = new Uint8Array(analyser.frequencyBinCount);
             
-            fillLogs();
             animate();
         }
 
@@ -126,30 +119,36 @@
             requestAnimationFrame(animate);
             analyser.getByteFrequencyData(dataArray);
             let bass = dataArray[1];
-            
-            // ALEV EFEKTİ
+
+            // ANA BAŞLIK BASS ETKİSİ
             const title = document.getElementById('main-title');
-            if(bass > 180) {
-                title.style.textShadow = `0 0 ${bass/5}px #00ff00, 0 0 ${bass/2}px #ff0000`;
-                title.style.transform = `scale(${1 + bass/1000})`;
+            if(bass > 190) {
+                title.style.textShadow = `0 0 ${bass/4}px #00ff00, 0 0 ${bass/2}px #ff0000`;
+                title.style.transform = `scale(1.1) rotate(${Math.random()*2-1}deg)`;
+            } else {
+                title.style.transform = "scale(1) rotate(0deg)";
             }
 
-            // ALTYAZI
-            const time = document.getElementById('bg-music').currentTime;
-            const lyric = lyrics.filter(l => l.time <= time).pop();
-            if(lyric) document.getElementById('lyrics-text').innerText = lyric.text;
+            // ANLIK SÖZ PATLATMA
+            const currentTime = document.getElementById('bg-music').currentTime;
+            lyricData.forEach((item, index) => {
+                if (Math.abs(currentTime - item.time) < 0.1 && !item.shown) {
+                    spawnWord(item.text, item.x, item.y);
+                    item.shown = true;
+                    setTimeout(() => item.shown = false, 1000); // Tekrar oynatması için
+                }
+            });
         }
 
-        function fillLogs() {
-            const logs = ["GET /API/V1/DATA", "ENCRYPTING...", "PROXY_READY", "BYPASS_SUCCESS", "SYSTEM_ACTIVE"];
-            setInterval(() => {
-                const p1 = document.createElement('div');
-                p1.innerText = logs[Math.floor(Math.random()*logs.length)];
-                document.getElementById('left-logs').prepend(p1);
-                const p2 = document.createElement('div');
-                p2.innerText = "IP_LOG: " + Math.floor(Math.random()*255) + ".XXX";
-                document.getElementById('right-logs').prepend(p2);
-            }, 1000);
+        function spawnWord(text, x, y) {
+            const container = document.getElementById('edit-lyrics');
+            const el = document.createElement('div');
+            el.className = 'lyric-word lyric-active';
+            el.innerText = text;
+            el.style.left = x;
+            el.style.top = y;
+            container.appendChild(el);
+            setTimeout(() => el.remove(), 600);
         }
 
         function toggleSec(id, event) {
@@ -170,11 +169,11 @@
         canvas.width = window.innerWidth; canvas.height = window.innerHeight;
         const drops = Array(Math.floor(canvas.width / 20)).fill(1);
         function draw() {
-            ctx.fillStyle = "rgba(0,0,0,0.05)"; ctx.fillRect(0,0,canvas.width,canvas.height);
+            ctx.fillStyle = "rgba(0,0,0,0.1)"; ctx.fillRect(0,0,canvas.width,canvas.height);
             ctx.fillStyle = "#00ff00";
             drops.forEach((y, i) => {
                 ctx.fillText(Math.floor(Math.random()*2), i*20, y*20);
-                if(y*20 > canvas.height && Math.random() > 0.985) drops[i] = 0;
+                if(y*20 > canvas.height && Math.random() > 0.98) drops[i] = 0;
                 drops[i]++;
             });
         }
