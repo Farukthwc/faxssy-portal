@@ -77,23 +77,25 @@
         .content-area { display: none; width: 100%; animation: fadeIn 0.4s ease; }
         .ss-img { width: 100%; border: 1px solid #00ff00; margin-bottom: 20px; border-radius: 4px; }
 
+        /* İLETİŞİM BÖLÜMÜ */
         .contact-section { margin-top: 30px; border-top: 1px solid #222; padding-top: 20px; text-align: center; }
         .contact-title { color: #0088ff; font-size: 1rem; margin-bottom: 15px; letter-spacing: 3px; font-weight: bold; }
         .social-links { display: flex; flex-direction: column; gap: 10px; align-items: center; }
-        @media (min-width: 400px) { .social-links { flex-direction: row; justify-content: center; } }
+        @media (min-width: 600px) { .social-links { flex-direction: row; flex-wrap: wrap; justify-content: center; } }
 
         .social-link { 
             color: #0088ff; 
             text-decoration: none; 
-            font-size: 0.8rem; 
+            font-size: 0.75rem; 
             border: 2px solid #0088ff; 
             background-color: #000000; 
-            padding: 10px 20px; 
+            padding: 10px 15px; 
             font-weight: 900; 
-            width: 160px;
+            width: 140px;
             transition: 0.3s;
+            text-align: center;
         }
-        .social-link:hover { background: #0088ff; color: #000; box-shadow: 0 0 20px #0088ff; }
+        .social-link:hover { background: #0088ff; color: #000; box-shadow: 0 0 20px #0088ff; transform: scale(1.05); }
 
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
     </style>
@@ -138,7 +140,8 @@
             <div class="contact-title">-- İLETİŞİM --</div>
             <div class="social-links">
                 <a href="https://instagram.com/faxstter" target="_blank" class="social-link">INSTAGRAM</a>
-                <a href="https://open.spotify.com/user/faxstter" target="_blank" class="social-link">SPOTIFY</a>
+                <a href="https://discord.com/users/thwl0" target="_blank" class="social-link">DISCORD</a>
+                <a href="https://open.spotify.com/" target="_blank" class="social-link">SPOTIFY</a>
             </div>
         </div>
     </div>
@@ -219,7 +222,6 @@
             }, 2000);
         }
 
-        // ÖMER EKŞİ MATRIX ARKA PLAN
         const canvas = document.getElementById('matrix-canvas');
         const ctx = canvas.getContext('2d');
         canvas.width = window.innerWidth; canvas.height = window.innerHeight;
@@ -229,7 +231,7 @@
         function drawMatrix() {
             ctx.fillStyle = "rgba(0, 0, 0, 0.1)";
             ctx.fillRect(0, 0, canvas.width, canvas.height);
-            ctx.fillStyle = "#00ff00"; // Daha parlak yeşil
+            ctx.fillStyle = "#00ff00"; 
             ctx.font = "bold 16px monospace";
             for (let i = 0; i < drops.length; i++) {
                 const char = matrixText.charAt(Math.floor(Math.random() * matrixText.length));
