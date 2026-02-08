@@ -3,9 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Faxstter Inc | Elite Terminal</title>
+    <title>Faxstter Inc | Mobile Ready</title>
     <style>
-        /* GENEL AYARLAR VE ODAK */
         body { 
             background: #000; 
             color: #00ff00; 
@@ -19,53 +18,85 @@
             overflow-x: hidden;
         }
         
-        /* ÖZEL FAXSTTER MATRIX ARKA PLAN */
-        #matrix-canvas { position: fixed; top: 0; left: 0; z-index: -1; opacity: 0.25; }
+        #matrix-canvas { position: fixed; top: 0; left: 0; z-index: -1; opacity: 0.2; }
 
-        /* GİRİŞ EKRANI */
         #overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; display: flex; align-items: center; justify-content: center; z-index: 9999; }
-        #start-btn { padding: 15px 40px; font-size: 1.2rem; background: #000; color: #00ff00; border: 2px solid #00ff00; cursor: pointer; box-shadow: 0 0 20px #00ff00; font-weight: bold; letter-spacing: 3px; }
+        #start-btn { padding: 15px 35px; font-size: 1.1rem; background: #000; color: #00ff00; border: 2px solid #00ff00; cursor: pointer; box-shadow: 0 0 20px #00ff00; font-weight: bold; }
 
-        /* KIRMIZI DÖNGÜSEL SÖZLER (YANLAR) */
-        .lyric-loop { position: fixed; top: 25%; width: 180px; color: #ff0000; font-size: 1rem; font-weight: 900; text-shadow: 0 0 10px #ff0000; opacity: 0.8; z-index: 5; pointer-events: none; text-transform: uppercase; }
-        .left-loop { left: 20px; text-align: left; }
-        .right-loop { right: 20px; text-align: right; }
+        /* TELEFONLARDA KARIŞMAMASI İÇİN YAN YAZILARIN AYARI */
+        .lyric-loop { 
+            position: fixed; 
+            top: 50%; 
+            transform: translateY(-50%);
+            width: 100px; 
+            color: #ff0000; 
+            font-size: 0.8rem; 
+            font-weight: 900; 
+            text-shadow: 0 0 10px #ff0000; 
+            opacity: 0.5; 
+            z-index: 1; 
+            pointer-events: none; 
+            text-transform: uppercase;
+            overflow: hidden;
+        }
+        .left-loop { left: 5px; text-align: left; }
+        .right-loop { right: 5px; text-align: right; }
 
-        /* BASLA ALEVLENEN BAŞLIK VE KART */
-        .title-wrapper { display: flex; align-items: center; justify-content: center; gap: 20px; margin: 40px 0; transition: 0.1s; }
-        .faxstter-title { font-size: clamp(1.8rem, 6vw, 4rem); font-weight: 900; color: #000; -webkit-text-stroke: 1.5px #00ff00; text-shadow: 0 0 20px #00ff00; margin: 0; }
-        .card-icon { font-size: clamp(1.8rem, 6vw, 4rem); color: #00ff00; filter: drop-shadow(0 0 10px #00ff00); transition: 0.1s; }
+        /* BAŞLIK VE KART - TAM MERKEZ */
+        .title-wrapper { 
+            display: flex; 
+            flex-direction: column; /* Mobilde alt alta gelmesi için */
+            align-items: center; 
+            justify-content: center; 
+            gap: 10px; 
+            margin: 40px 0; 
+            transition: 0.1s;
+            text-align: center;
+            z-index: 10;
+        }
+        @media (min-width: 600px) { .title-wrapper { flex-direction: row; gap: 20px; } }
 
-        /* ANA PANEL ÇERÇEVESİ */
-        .main-frame { width: 85%; max-width: 850px; background: rgba(0, 10, 0, 0.9); border: 1px solid rgba(0, 255, 0, 0.3); padding: 30px; margin-bottom: 60px; box-shadow: 0 0 40px rgba(0, 0, 0, 1); }
+        .faxstter-title { font-size: clamp(1.5rem, 8vw, 4rem); font-weight: 900; color: #000; -webkit-text-stroke: 1.2px #00ff00; text-shadow: 0 0 20px #00ff00; margin: 0; }
+        .card-icon { font-size: clamp(2rem, 10vw, 4rem); color: #00ff00; filter: drop-shadow(0 0 10px #00ff00); }
 
-        .btn-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 30px; }
-        .panel-btn { padding: 18px; background: transparent; border: 1px solid #00ff00; color: #00ff00; cursor: pointer; font-weight: bold; text-transform: uppercase; transition: 0.3s; }
+        /* ANA PANEL ÇERÇEVESİ - MOBİL ODAKLI */
+        .main-frame { 
+            width: 85%; 
+            max-width: 600px; 
+            background: rgba(0, 10, 0, 0.95); 
+            border: 1px solid rgba(0, 255, 0, 0.3); 
+            padding: 20px; 
+            margin-bottom: 60px; 
+            box-shadow: 0 0 30px rgba(0, 0, 0, 1);
+            z-index: 10;
+        }
+
+        .btn-grid { display: grid; grid-template-columns: 1fr; gap: 10px; margin-bottom: 30px; }
+        @media (min-width: 600px) { .btn-grid { grid-template-columns: 1fr 1fr; } }
+
+        .panel-btn { padding: 15px; background: transparent; border: 1px solid #00ff00; color: #00ff00; cursor: pointer; font-weight: bold; text-transform: uppercase; font-size: 0.8rem; }
         .tool-red { border-color: #ff0000; color: #ff0000; }
         .info-pink { border-color: #ff00ff; color: #ff00ff; }
-        .panel-btn:hover { box-shadow: 0 0 20px currentColor; transform: translateY(-3px); }
 
-        /* İÇERİK GÖRÜNTÜLEME */
         .content-area { display: none; width: 100%; animation: fadeIn 0.4s ease; }
-        .ss-img { width: 100%; border: 1px solid #00ff00; margin-bottom: 25px; border-radius: 4px; box-shadow: 0 0 20px rgba(0, 255, 0, 0.1); }
+        .ss-img { width: 100%; border: 1px solid #00ff00; margin-bottom: 20px; border-radius: 4px; }
 
-        /* MAVİ ÇERÇEVELİ SİYAH İLETİŞİM BUTONLARI */
-        .contact-section { margin-top: 40px; border-top: 1px solid #222; padding-top: 30px; text-align: center; }
-        .contact-title { color: #0088ff; font-size: 1.1rem; margin-bottom: 25px; letter-spacing: 4px; text-transform: uppercase; font-weight: bold; text-shadow: 0 0 10px #0088ff; }
-        .social-links { display: flex; gap: 25px; justify-content: center; }
+        /* İLETİŞİM BUTONLARI MERKEZDE */
+        .contact-section { margin-top: 30px; border-top: 1px solid #222; padding-top: 20px; text-align: center; }
+        .contact-title { color: #0088ff; font-size: 1rem; margin-bottom: 15px; letter-spacing: 3px; font-weight: bold; }
+        .social-links { display: flex; flex-direction: column; gap: 10px; align-items: center; }
+        @media (min-width: 400px) { .social-links { flex-direction: row; justify-content: center; } }
+
         .social-link { 
             color: #0088ff; 
             text-decoration: none; 
-            font-size: 0.85rem; 
+            font-size: 0.8rem; 
             border: 2px solid #0088ff; 
             background-color: #000000; 
-            padding: 12px 25px; 
-            transition: 0.4s; 
+            padding: 10px 20px; 
             font-weight: 900; 
-            letter-spacing: 2px;
-            display: inline-block;
+            width: 160px; /* Mobilde butonlar eşit boyda olsun */
         }
-        .social-link:hover { background-color: #0088ff; color: #000; box-shadow: 0 0 25px #0088ff; transform: translateY(-3px); }
 
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
     </style>
@@ -75,7 +106,7 @@
     <canvas id="matrix-canvas"></canvas>
 
     <div id="overlay">
-        <button id="start-btn" onclick="initPortal()">EXECUTE FAXSTTER_CORE</button>
+        <button id="start-btn" onclick="initPortal()">SİSTEMİ BAŞLAT</button>
     </div>
 
     <div class="lyric-loop left-loop" id="l-loop"></div>
@@ -88,9 +119,9 @@
 
     <div class="main-frame">
         <div class="btn-grid">
-            <button class="panel-btn" onclick="toggleSec('bot-display', event)">🤖 AKTİF BOTLAR</button>
-            <button class="panel-btn tool-red" onclick="toggleSec('tool-display', event)">⚙️ ÖZEL TOOLLAR</button>
-            <button class="panel-btn info-pink" onclick="toggleSec('info-display', event)">ℹ️ BİLGİLENDİRME 💀</button>
+            <button class="panel-btn" onclick="toggleSec('bot-display', event)">🤖 BOTLAR</button>
+            <button class="panel-btn tool-red" onclick="toggleSec('tool-display', event)">⚙️ TOOLLAR</button>
+            <button class="panel-btn info-pink" onclick="toggleSec('info-display', event)" style="grid-column: span 1;">ℹ️ BİLGİ</button>
         </div>
 
         <div id="bot-display" class="content-area">
@@ -103,14 +134,14 @@
         </div>
         <div id="info-display" class="content-area" style="color:#ff00ff; text-align:center;">
             <h3>🔱 FAXSTTER SERVICES 🔱</h3>
-            <p>ÖZEL TOOL YAPIMI & ELİTE SİTE TASARIMI YAPILIR. 💀</p>
+            <p>ÖZEL TOOL & SİTE TASARIMI YAPILIR. 💀</p>
         </div>
 
         <div class="contact-section">
             <div class="contact-title">-- İLETİŞİM --</div>
             <div class="social-links">
                 <a href="https://instagram.com/faxstter" target="_blank" class="social-link">INSTAGRAM</a>
-                <a href="https://spotify.com" target="_blank" class="social-link">SPOTIFY</a>
+                <a href="https://open.spotify.com/user/senin_id" target="_blank" class="social-link">SPOTIFY</a>
             </div>
         </div>
     </div>
@@ -146,8 +177,8 @@
             let bass = dataArray[1];
             const titleAnim = document.getElementById('title-anim');
             if(bass > 185) {
-                titleAnim.style.textShadow = `0 0 ${bass/5}px #00ff00, 0 0 ${bass/2}px #ff0000`;
-                titleAnim.style.transform = `scale(${1 + bass/1200})`;
+                titleAnim.style.transform = `scale(${1 + bass/1500})`;
+                titleAnim.style.textShadow = `0 0 ${bass/10}px #00ff00`;
             } else {
                 titleAnim.style.transform = "scale(1)";
             }
@@ -161,29 +192,29 @@
                 document.getElementById('l-loop').prepend(pL);
                 const pR = document.createElement('div'); pR.innerText = word;
                 document.getElementById('r-loop').prepend(pR);
-                if(document.getElementById('l-loop').children.length > 8) {
+                if(document.getElementById('l-loop').children.length > 5) {
                     document.getElementById('l-loop').lastChild.remove();
                     document.getElementById('r-loop').lastChild.remove();
                 }
                 i++;
-            }, 1500);
+            }, 2000);
         }
 
         const canvas = document.getElementById('matrix-canvas');
         const ctx = canvas.getContext('2d');
         canvas.width = window.innerWidth; canvas.height = window.innerHeight;
         const matrixText = "FAXSTTER";
-        const drops = Array.from({ length: Math.floor(canvas.width / 16) }).fill(1);
+        const drops = Array.from({ length: Math.floor(canvas.width / 20) }).fill(1);
 
         function drawMatrix() {
-            ctx.fillStyle = "rgba(0, 0, 0, 0.08)";
+            ctx.fillStyle = "rgba(0, 0, 0, 0.1)";
             ctx.fillRect(0, 0, canvas.width, canvas.height);
-            ctx.fillStyle = "#00ff00";
-            ctx.font = "16px monospace";
+            ctx.fillStyle = "#004400";
+            ctx.font = "15px monospace";
             for (let i = 0; i < drops.length; i++) {
                 const char = matrixText.charAt(Math.floor(Math.random() * matrixText.length));
-                ctx.fillText(char, i * 16, drops[i] * 16);
-                if (drops[i] * 16 > canvas.height && Math.random() > 0.975) drops[i] = 0;
+                ctx.fillText(char, i * 20, drops[i] * 20);
+                if (drops[i] * 20 > canvas.height && Math.random() > 0.975) drops[i] = 0;
                 drops[i]++;
             }
             requestAnimationFrame(drawMatrix);
